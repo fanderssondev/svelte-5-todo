@@ -19,9 +19,10 @@
 // []: Database
 
 // TODO: Page header
-// []: Logo
-// []: Login button
+// [X]: Logo
+// [X]: Login button
 // []: Sign out button
-// []: Toggle darkmode button
+// [X]: Toggle darkmode button
 
 // TODO: Start page
+// TODO: Update README
