@@ -5,8 +5,8 @@
 
 // TODO: Structure
 // []: Create input form
-// []: Define Todo type
-// []: List todos
+// [X]: Define Todo type
+// [X]: List todos
 // []: Create buttons for all, unfinished and finished todos
 // []: Refactor to store
 // []: Refactor to components
