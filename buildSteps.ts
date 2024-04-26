@@ -4,7 +4,7 @@
 // []: Icons for todos, possibly changeable
 
 // TODO: Structure
-// []: Create input form
+// [X]: Create input form
 // [X]: Define Todo type
 // [X]: List todos
 // []: Create buttons for all, unfinished and finished todos
