@@ -1,6 +1,6 @@
 // TODO: Style
 // [X]: CSS reset
-// []: Darkmode
+// [X]: Darkmode
 // []: Icons for todos, possibly changeable
 
 // TODO: Structure

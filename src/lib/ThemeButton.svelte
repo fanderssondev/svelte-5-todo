@@ -1,12 +1,20 @@
 <script lang="ts">
-	let darkMode = false;
+	import { browser } from '$app/environment';
+
+	let darkMode = $state(false);
 
 	const handleDarkModeToggle = () => {
 		darkMode = !darkMode;
 	};
+
+	$effect(() => {
+		if (browser) {
+			darkMode ? (document.body.dataset.theme = 'dark') : (document.body.dataset.theme = '');
+		}
+	});
 </script>
 
-<button on:click={handleDarkModeToggle}
+<button onclick={handleDarkModeToggle}
 	>{#if darkMode}
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

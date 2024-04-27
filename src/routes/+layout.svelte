@@ -12,7 +12,7 @@
 		<h2>Svelte 5 Todo list</h2>
 		<div class="buttons">
 			<button>Login</button>
-			<!-- <ThemeButton /> -->
+			<ThemeButton />
 		</div>
 	</div>
 </header>
@@ -23,7 +23,7 @@
 
 <style>
 	header {
-		background-color: hsl(var(--gray-500));
+		background-color: var(--gray-500);
 		padding-block: 0.5rem;
 
 		& > div {
@@ -33,17 +33,26 @@
 			margin: 0 auto;
 			padding-inline: 2rem;
 
+			& h2 {
+				font-size: 2rem;
+				letter-spacing: 2px;
+			}
+
 			& .buttons {
 				display: flex;
 				gap: 1rem;
 
 				& button {
-					padding: 0.2rem 0.5rem;
+					padding: 0.2em 0.7em;
 					border-radius: 5px;
+					background-color: var(--gray-300);
+					font-size: 1.5rem;
+					letter-spacing: 3px;
 
 					&:hover {
 						cursor: pointer;
-						background: #000;
+						background-color: var(--gray-700);
+						color: var(--gray-300);
 					}
 				}
 			}
