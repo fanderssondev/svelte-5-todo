@@ -81,7 +81,7 @@ ul {
 }
 
 body {
-   background-color: var(--gray-200);
+   background-color: var(--gray-100);
 }
 
 ol,
@@ -98,8 +98,8 @@ button {
    font-family: inherit;
    border: none;
    background-color: transparent;
-   margin: none;
-   padding: none;
+   margin: 0;
+   padding: 0;
 }
 
 input[type='text'] {

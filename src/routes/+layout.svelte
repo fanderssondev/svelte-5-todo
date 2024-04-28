@@ -23,8 +23,8 @@
 
 <style>
 	header {
-		background-color: var(--gray-500);
-		padding-block: 0.5rem;
+		background-color: var(--gray-600);
+		/* padding-block: 0.5rem; */
 
 		& > div {
 			display: flex;
@@ -34,12 +34,15 @@
 			padding-inline: 2rem;
 
 			& h2 {
+				color: var(--gray-200);
 				font-size: 2rem;
 				letter-spacing: 2px;
 			}
 
 			& .buttons {
 				display: flex;
+				justify-content: space-between;
+				align-items: center;
 				gap: 1rem;
 
 				& button {
