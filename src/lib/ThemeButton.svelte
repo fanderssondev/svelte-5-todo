@@ -30,9 +30,6 @@
 </button>
 
 <style>
-	:root {
-	}
-
 	#theme-btn {
 		display: inline;
 		cursor: pointer;
@@ -43,6 +40,7 @@
 		border-radius: 50%;
 		position: relative;
 		isolation: isolate;
+		letter-spacing: 0px;
 
 		&::before {
 			content: '';
