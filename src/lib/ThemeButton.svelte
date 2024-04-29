@@ -40,7 +40,7 @@
 		border-radius: 50%;
 		position: relative;
 		isolation: isolate;
-		letter-spacing: 0px;
+		letter-spacing: 0;
 
 		&::before {
 			content: '';
