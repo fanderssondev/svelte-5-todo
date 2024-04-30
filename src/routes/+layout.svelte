@@ -17,13 +17,15 @@
 	</div>
 </header>
 
-<div class="container">
-	<slot />
-</div>
+<main>
+	<div class="container">
+		<slot />
+	</div>
+</main>
 
 <style>
 	header {
-		background-color: var(--gray-600);
+		background-color: var(--clr-primary-600);
 		/* padding-block: 0.5rem; */
 
 		& > div {
@@ -34,7 +36,7 @@
 			padding-inline: 2rem;
 
 			& h2 {
-				color: var(--gray-200);
+				color: var(--clr-primary-200);
 				font-size: 2rem;
 				letter-spacing: 2px;
 			}
@@ -48,18 +50,22 @@
 				& button {
 					padding: 0.2em 0.7em;
 					border-radius: 5px;
-					background-color: var(--gray-300);
+					background-color: var(--clr-primary-300);
 					font-size: 1.5rem;
 					letter-spacing: 3px;
 
 					&:hover {
 						cursor: pointer;
-						background-color: var(--gray-700);
-						color: var(--gray-300);
+						background-color: var(--clr-primary-700);
+						color: var(--clr-primary-300);
 					}
 				}
 			}
 		}
+	}
+
+	main {
+		margin-top: 2rem;
 	}
 
 	.container {

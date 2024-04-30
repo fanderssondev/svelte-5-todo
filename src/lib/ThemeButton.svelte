@@ -40,7 +40,7 @@
 		border-radius: 50%;
 		position: relative;
 		isolation: isolate;
-		letter-spacing: 0;
+		line-height: 0;
 
 		&::before {
 			content: '';
@@ -64,16 +64,17 @@
 		&::after {
 			content: attr(aria-label);
 			position: absolute;
-			color: var(--gray-700);
-			background-color: var(--gray-300);
+			color: var(--clr-primary-700);
+			background-color: var(--clr-primary-300);
 			width: max-content;
 			font-size: 1rem;
+			line-height: initial;
 			letter-spacing: 2.5px;
 			right: -20px;
 			top: 110%;
 			margin: 0 auto;
-			padding: 0.5em 1em;
-			border-radius: 0.125em;
+			padding: 0.1em 0.25em 0 0.25em;
+			border-radius: 0.2em;
 			opacity: 0;
 			transform: scale(1);
 			transform-origin: top;
@@ -101,7 +102,7 @@
 	svg {
 		--size: 2rem;
 
-		fill: var(--gray-300);
+		fill: var(--clr-primary-300);
 		width: var(--size);
 		height: var(--size);
 		cursor: pointer;

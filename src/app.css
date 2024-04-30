@@ -10,16 +10,16 @@
 :root {
 
    /* Gray */
-   --gray-100: hsl(220 14.3% 95.9%);
-   --gray-200: hsl(220 13% 91%);
-   --gray-300: hsl(216 12.2% 83.9%);
-   --gray-400: hsl(217.9 10.6% 64.9%);
-   --gray-500: hsl(220 8.9% 46.1%);
-   --gray-600: hsl(215 13.8% 34.1%);
-   --gray-700: hsl(216.9 19.1% 26.7%);
-   --gray-800: hsl(215 27.9% 16.9%);
-   --gray-900: hsl(220.9 39.3% 11%);
-   --gray-950: hsl(224 71.4% 4.1%);
+   --clr-primary-100: hsl(220 14.3% 95.9%);
+   --clr-primary-200: hsl(220 13% 91%);
+   --clr-primary-300: hsl(216 12.2% 83.9%);
+   --clr-primary-400: hsl(217.9 10.6% 64.9%);
+   --clr-primary-500: hsl(220 8.9% 46.1%);
+   --clr-primary-600: hsl(215 13.8% 34.1%);
+   --clr-primary-700: hsl(216.9 19.1% 26.7%);
+   --clr-primary-800: hsl(215 27.9% 16.9%);
+   --clr-primary-900: hsl(220.9 39.3% 11%);
+   --clr-primary-950: hsl(224 71.4% 4.1%);
 
    /* Rose */
    --rose-100: hsl(355.6 100% 94.7%);
@@ -40,16 +40,16 @@
    color-scheme: dark;
 
    /* Gray */
-   --gray-100: hsl(224 71.4% 4.1%);
-   --gray-200: hsl(220.9 39.3% 11%);
-   --gray-300: hsl(215 27.9% 16.9%);
-   --gray-400: hsl(216.9 19.1% 26.7%);
-   --gray-500: hsl(215 13.8% 34.1%);
-   --gray-600: hsl(220 8.9% 46.1%);
-   --gray-700: hsl(217.9 10.6% 64.9%);
-   --gray-800: hsl(216 12.2% 83.9%);
-   --gray-900: hsl(220 13% 91%);
-   --gray-950: hsl(220 14.3% 95.9%);
+   --clr-primary-100: hsl(224 71.4% 4.1%);
+   --clr-primary-200: hsl(220.9 39.3% 11%);
+   --clr-primary-300: hsl(215 27.9% 16.9%);
+   --clr-primary-400: hsl(216.9 19.1% 26.7%);
+   --clr-primary-500: hsl(215 13.8% 34.1%);
+   --clr-primary-600: hsl(220 8.9% 46.1%);
+   --clr-primary-700: hsl(217.9 10.6% 64.9%);
+   --clr-primary-800: hsl(216 12.2% 83.9%);
+   --clr-primary-900: hsl(220 13% 91%);
+   --clr-primary-950: hsl(220 14.3% 95.9%);
 
    /* Rose */
    --rose-950: hsl(355.6 100% 94.7%);
@@ -77,11 +77,11 @@ ul {
    margin: 0;
    padding: 0;
    font-weight: normal;
-   color: var(--gray-800);
+   color: var(--clr-primary-800);
 }
 
 body {
-   background-color: var(--gray-100);
+   background-color: var(--clr-primary-100);
 }
 
 ol,
@@ -103,7 +103,7 @@ button {
 }
 
 input[type='text'] {
-   background-color: var(--gray-400);
+   background-color: var(--clr-primary-400);
    border: none;
    padding: 0.7em 1.25em;
    border-radius: 5px;
@@ -111,5 +111,5 @@ input[type='text'] {
    font-family: Roboto slab;
    font-weight: 400;
    letter-spacing: 1.4px;
-   color: var(--gray-800);
+   color: var(--clr-primary-800);
 }
