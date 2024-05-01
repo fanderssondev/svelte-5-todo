@@ -12,6 +12,7 @@ declare global {
       id: string,
       text: string,
       completed: boolean;
+      editing: boolean;
    }
 }
 

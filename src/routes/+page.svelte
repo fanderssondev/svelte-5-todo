@@ -1,11 +1,14 @@
 <script lang="ts">
+	import 'iconify-icon';
+
 	let initialState: Todo[] = [
-		{ id: '1', text: 'Todo 1', completed: false },
-		{ id: '2', text: 'Todo 2', completed: false },
-		{ id: '3', text: 'Todo 3', completed: false }
+		{ id: '1', text: 'Todo 1', completed: false, editing: false },
+		{ id: '2', text: 'Todo 2', completed: false, editing: false },
+		{ id: '3', text: 'Todo 3', completed: false, editing: false }
 	];
 
 	let todos = $state<Todo[]>(initialState);
+	// let editing = $state(false);
 
 	$effect(() => {
 		console.log(Array.from(todos));
@@ -29,17 +32,38 @@
 		const newTodo: Todo = {
 			id: todos.length.toString(),
 			text,
-			completed: false
+			completed: false,
+			editing: false
 		};
 
 		todos = [...todos, newTodo];
 		inputElement.value = '';
 	}
 
+	function toggleEditing(id: string): void {
+		// todos.map((todo) => {
+		// 	if (todo.id === id) {
+		// 		return { ...todo, editing: true };
+		// 	}
+		// 	return todo;
+		// });
+
+		let todo = todos.find((todo) => todo.id == id);
+
+		if (todo) {
+			todo.editing = !todo.editing;
+		}
+	}
+
 	function editTodo(id: string, e: KeyboardEvent): void {
+		const inputElement = e.target as HTMLInputElement;
+
+		if (e.key === 'Escape') {
+			inputElement.blur();
+			toggleEditing(id);
+		}
 		if (e.key !== 'Enter') return;
 
-		const inputElement = e.target as HTMLInputElement;
 		const text = inputElement.value;
 
 		todos = todos.map((todo) => {
@@ -48,6 +72,8 @@
 			}
 			return todo;
 		});
+
+		toggleEditing(id);
 	}
 </script>
 
@@ -58,8 +84,31 @@
 <ul>
 	{#each todos as todo}
 		<li>
-			<input type="text" value={todo.text} onkeydown={(e) => editTodo(todo.id, e)} />
-			<input type="checkbox" checked={todo.completed} onchange={(e) => toggleCompleted(todo.id)} />
+			<input
+				class="sr-only"
+				aria-label="Toggle todo completed"
+				type="checkbox"
+				checked={todo.completed}
+			/>
+			{#if todo.completed}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<!-- svelte-ignore a11y-no-static-element-interactions -->
+				<iconify-icon icon="mdi:checkbox-marked-outline" onclick={() => toggleCompleted(todo.id)}
+				></iconify-icon>
+			{:else}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<!-- svelte-ignore a11y-no-static-element-interactions -->
+				<iconify-icon icon="mdi:checkbox-blank-outline" onclick={() => toggleCompleted(todo.id)}
+				></iconify-icon>
+			{/if}
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+
+			{#if todo.editing}
+				<!-- svelte-ignore a11y-autofocus -->
+				<input type="text" autofocus value={todo.text} onkeydown={(e) => editTodo(todo.id, e)} />
+			{:else}
+				<span ondblclick={() => toggleEditing(todo.id)}>{todo.text}</span>
+			{/if}
 		</li>
 	{/each}
 </ul>
@@ -74,5 +123,40 @@
 
 	.input-form {
 		margin-bottom: 2rem;
+	}
+
+	li {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 2rem;
+
+		input,
+		span {
+			padding-left: 4rem;
+		}
+
+		span {
+			padding-right: 2rem;
+		}
+
+		& iconify-icon {
+			position: absolute;
+			display: inline-block;
+			font-size: 2em;
+			left: 0.5em;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+
+	/* Used to be able to have content visually hidden but readable for screen readers */
+	.sr-only {
+		position: absolute;
+		left: -10000px;
+		top: auto;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
 	}
 </style>

@@ -8,7 +8,8 @@
 
 <header>
 	<div>
-		<Logo --size="2rem" />
+		<!-- <Logo --size="2rem" /> -->
+		<iconify-icon icon="mdi:checkbox-multiple-marked-circle-outline"></iconify-icon>
 		<h2>Svelte 5 Todo list</h2>
 		<div class="buttons">
 			<button>Login</button>
@@ -26,7 +27,7 @@
 <style>
 	header {
 		background-color: var(--clr-primary-600);
-		/* padding-block: 0.5rem; */
+		padding-block: 0.5rem;
 
 		& > div {
 			display: flex;
@@ -45,7 +46,7 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				gap: 1rem;
+				gap: 2rem;
 
 				& button {
 					padding: 0.2em 0.7em;
@@ -62,6 +63,11 @@
 				}
 			}
 		}
+	}
+
+	iconify-icon {
+		font-size: 4rem;
+		color: var(--clr-primary-200);
 	}
 
 	main {

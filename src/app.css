@@ -102,7 +102,8 @@ button {
    padding: 0;
 }
 
-input[type='text'] {
+input[type='text'],
+span {
    background-color: var(--clr-primary-400);
    border: none;
    padding: 0.7em 1.25em;
@@ -112,4 +113,10 @@ input[type='text'] {
    font-weight: 400;
    letter-spacing: 1.4px;
    color: var(--clr-primary-800);
+}
+
+iconify-icon {
+   display: inline-block;
+   width: 1em;
+   height: 1em;
 }
