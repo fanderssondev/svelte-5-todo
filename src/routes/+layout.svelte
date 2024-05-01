@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '../app.css';
-	import Logo from '$lib/logos/Logo.svelte';
 	import ThemeButton from '$lib/ThemeButton.svelte';
 
 	let darkMode = false;
@@ -8,9 +7,8 @@
 
 <header>
 	<div>
-		<!-- <Logo --size="2rem" /> -->
 		<iconify-icon icon="mdi:checkbox-multiple-marked-circle-outline"></iconify-icon>
-		<h2>Svelte 5 Todo list</h2>
+		<!-- <h2>Svelte 5 Todo list</h2> -->
 		<div class="buttons">
 			<button>Login</button>
 			<ThemeButton />

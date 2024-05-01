@@ -12,7 +12,7 @@
 // []: Refactor to components
 
 // TODO: Funcionality
-// []: Local storage
+// [X]: Local storage
 // []: Colors for categories
 // []: Duedate for todos
 // []: Login
