@@ -52,8 +52,10 @@
 		}
 		if (e.key !== 'Enter') return;
 
+		inputElement.blur();
 		$todos[index].text = inputElement.value;
 		$todos[index].editing = false;
+		$todos[index].completed = false;
 	}
 
 	function handleBlur(event: FocusEvent, id: string): void {
@@ -61,9 +63,13 @@
 		const newText = targetElement.value;
 
 		// editTodo(id, newText);
-		targetElement.blur();
 		const index = $todos.findIndex((todo) => todo.id == id);
 		$todos[index].editing = false;
+		targetElement.blur();
+	}
+
+	function deleteTodo(id: string): void {
+		$todos = $todos.filter((todo) => todo.id !== id);
 	}
 </script>
 
@@ -98,10 +104,21 @@
 
 			{#if todo.editing}
 				<!-- svelte-ignore a11y_autofocus -->
-				<input type="text" autofocus value={todo.text} onkeydown={(e) => editTodo(todo.id, e)} />
+				<input
+					type="text"
+					autofocus
+					value={todo.text}
+					onkeydown={(e) => editTodo(todo.id, e)}
+					onblur={() => toggleEditing(todo.id)}
+				/>
 			{:else}
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<span ondblclick={() => toggleEditing(todo.id)}>{todo.text}</span>
+				<span class:completed={todo.completed} ondblclick={() => toggleEditing(todo.id)}
+					>{todo.text}</span
+				>
+				<button onclick={() => deleteTodo(todo.id)}>
+					<iconify-icon class="delete-icon" icon="mdi:delete-forever-outline"></iconify-icon>
+				</button>
 			{/if}
 		</li>
 	{/each}
@@ -117,6 +134,7 @@
 
 	.input-form {
 		margin-bottom: 2rem;
+		background-color: var(--clr-primary-400);
 	}
 
 	li {
@@ -124,14 +142,31 @@
 		display: flex;
 		flex-direction: column;
 		margin-bottom: 2rem;
+		padding-left: 3em;
+		background-color: var(--clr-primary-400);
+		border-radius: 5px;
 
 		input,
 		span {
-			padding-left: 4rem;
+			/* padding-left: 5rem; */
+			background-color: transparent;
+
+			&:before {
+				content: '\00a0';
+			}
+
+			&:after {
+				content: '\00a0\00a0\00a0';
+			}
 		}
 
 		span {
 			padding-right: 2rem;
+
+			&.completed {
+				opacity: 0.3;
+				text-decoration: line-through;
+			}
 		}
 
 		& iconify-icon {
@@ -141,6 +176,16 @@
 			left: 0.5em;
 			top: 50%;
 			transform: translateY(-50%);
+		}
+
+		& .delete-icon {
+			left: auto;
+			right: 0.5em;
+			opacity: 0.5;
+
+			&:hover {
+				opacity: 1;
+			}
 		}
 	}
 

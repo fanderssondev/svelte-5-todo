@@ -8,11 +8,14 @@
 // [X]: Define Todo type
 // [X]: List todos
 // []: Create buttons for all, unfinished and finished todos
-// []: Refactor to store
 // []: Refactor to components
 
 // TODO: Funcionality
 // [X]: Local storage
+// [X]: Add todo
+// [X]: Edit todo
+// [X]: Delete todo
+// []: Filter todos for all, unfinished and finished todos
 // []: Colors for categories
 // []: Duedate for todos
 // []: Login
