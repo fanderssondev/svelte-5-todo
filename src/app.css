@@ -9,29 +9,41 @@
 
 :root {
 
-   /* Gray */
-   --clr-primary-100: hsl(220 14.3% 95.9%);
-   --clr-primary-200: hsl(220 13% 91%);
-   --clr-primary-300: hsl(216 12.2% 83.9%);
-   --clr-primary-400: hsl(217.9 10.6% 64.9%);
-   --clr-primary-500: hsl(220 8.9% 46.1%);
-   --clr-primary-600: hsl(215 13.8% 34.1%);
-   --clr-primary-700: hsl(216.9 19.1% 26.7%);
-   --clr-primary-800: hsl(215 27.9% 16.9%);
-   --clr-primary-900: hsl(220.9 39.3% 11%);
-   --clr-primary-950: hsl(224 71.4% 4.1%);
+   /* Slate */
+   --clr-primary-100: 210 40% 96.1%;
+   --clr-primary-200: 214.3 31.8% 91.4%;
+   --clr-primary-300: 212.7 26.8% 83.9%;
+   --clr-primary-400: 215 20.2% 65.1%;
+   --clr-primary-500: 215.4 16.3% 46.9%;
+   --clr-primary-600: 215.3 19.3% 34.5%;
+   --clr-primary-700: 215.3 25% 26.7%;
+   --clr-primary-800: 217.2 32.6% 17.5%;
+   --clr-primary-900: 222.2 47.4% 11.2%;
+   --clr-primary-950: 228.6 84% 4.9%;
 
    /* Rose */
-   --rose-100: hsl(355.6 100% 94.7%);
-   --rose-200: hsl(352.7 96.1% 90%);
-   --rose-300: hsl(352.6 95.7% 81.8%);
-   --rose-400: hsl(351.3 94.5% 71.4%);
-   --rose-500: hsl(349.7 89.2% 60.2%);
-   --rose-600: hsl(346.8 77.2% 49.8%);
-   --rose-700: hsl(345.3 82.7% 40.8%);
-   --rose-800: hsl(343.4 79.7% 34.7%);
-   --rose-900: hsl(341.5 75.5% 30.4%);
-   --rose-950: hsl(343.1 87.7% 15.9%);
+   --clr-accent-100: 355.6 100% 94.7%;
+   --clr-accent-200: 352.7 96.1% 90%;
+   --clr-accent-300: 352.6 95.7% 81.8%;
+   --clr-accent-400: 351.3 94.5% 71.4%;
+   --clr-accent-500: 349.7 89.2% 60.2%;
+   --clr-accent-600: 346.8 77.2% 49.8%;
+   --clr-accent-700: 345.3 82.7% 40.8%;
+   --clr-accent-800: 343.4 79.7% 34.7%;
+   --clr-accent-900: 341.5 75.5% 30.4%;
+   --clr-accent-950: 343.1 87.7% 15.9%;
+
+   /* clr-action */
+   --clr-action-100: 149.3 80.4% 90%;
+   --clr-action-200: 152.4 76% 80.4%;
+   --clr-action-300: 156.2 71.6% 66.9%;
+   --clr-action-400: 158.1 64.4% 51.6%;
+   --clr-action-500: 160.1 84.1% 39.4%;
+   --clr-action-600: 161.4 93.5% 30.4%;
+   --clr-action-700: 162.9 93.5% 24.3%;
+   --clr-action-800: 163.1 88.1% 19.8%;
+   --clr-action-900: 164.2 85.7% 16.5%;
+   --clr-action-950: 165.7 91.3% 9%;
 
    font-family: Bebas Neue;
 }
@@ -39,29 +51,41 @@
 [data-theme="dark"] {
    color-scheme: dark;
 
-   /* Gray */
-   --clr-primary-100: hsl(224 71.4% 4.1%);
-   --clr-primary-200: hsl(220.9 39.3% 11%);
-   --clr-primary-300: hsl(215 27.9% 16.9%);
-   --clr-primary-400: hsl(216.9 19.1% 26.7%);
-   --clr-primary-500: hsl(215 13.8% 34.1%);
-   --clr-primary-600: hsl(220 8.9% 46.1%);
-   --clr-primary-700: hsl(217.9 10.6% 64.9%);
-   --clr-primary-800: hsl(216 12.2% 83.9%);
-   --clr-primary-900: hsl(220 13% 91%);
-   --clr-primary-950: hsl(220 14.3% 95.9%);
+   /* Slate */
+   --clr-primary-950: 210 40% 96.1%;
+   --clr-primary-900: 214.3 31.8% 91.4%;
+   --clr-primary-800: 212.7 26.8% 83.9%;
+   --clr-primary-700: 215 20.2% 65.1%;
+   --clr-primary-600: 215.4 16.3% 46.9%;
+   --clr-primary-500: 215.3 19.3% 34.5%;
+   --clr-primary-400: 215.3 25% 26.7%;
+   --clr-primary-300: 217.2 32.6% 17.5%;
+   --clr-primary-200: 222.2 47.4% 11.2%;
+   --clr-primary-100: 228.6 84% 4.9%;
 
    /* Rose */
-   --rose-950: hsl(355.6 100% 94.7%);
-   --rose-900: hsl(352.7 96.1% 90%);
-   --rose-800: hsl(352.6 95.7% 81.8%);
-   --rose-700: hsl(351.3 94.5% 71.4%);
-   --rose-600: hsl(349.7 89.2% 60.2%);
-   --rose-500: hsl(346.8 77.2% 49.8%);
-   --rose-400: hsl(345.3 82.7% 40.8%);
-   --rose-300: hsl(343.4 79.7% 34.7%);
-   --rose-200: hsl(341.5 75.5% 30.4%);
-   --rose-100: hsl(343.1 87.7% 15.9%);
+   --clr-accent-950: 355.6 100% 94.7%;
+   --clr-accent-900: 352.7 96.1% 90%;
+   --clr-accent-800: 352.6 95.7% 81.8%;
+   --clr-accent-700: 351.3 94.5% 71.4%;
+   --clr-accent-600: 349.7 89.2% 60.2%;
+   --clr-accent-500: 346.8 77.2% 49.8%;
+   --clr-accent-400: 345.3 82.7% 40.8%;
+   --clr-accent-300: 343.4 79.7% 34.7%;
+   --clr-accent-200: 341.5 75.5% 30.4%;
+   --clr-accent-100: 343.1 87.7% 15.9%;
+
+   /* clr-action */
+   --clr-action-100: 165.7 91.3% 9%;
+   --clr-action-200: 164.2 85.7% 16.5%;
+   --clr-action-300: 163.1 88.1% 19.8%;
+   --clr-action-400: 162.9 93.5% 24.3%;
+   --clr-action-500: 161.4 93.5% 30.4%;
+   --clr-action-600: 160.1 84.1% 39.4%;
+   --clr-action-700: 158.1 64.4% 51.6%;
+   --clr-action-800: 156.2 71.6% 66.9%;
+   --clr-action-900: 152.4 76% 80.4%;
+   --clr-action-950: 149.3 80.4% 90%;
 }
 
 body,
@@ -77,11 +101,11 @@ ul {
    margin: 0;
    padding: 0;
    font-weight: normal;
-   color: var(--clr-primary-800);
+   color: hsl(var(--clr-primary-800));
 }
 
 body {
-   background-color: var(--clr-primary-100);
+   background-color: hsl(var(--clr-primary-200));
 }
 
 ol,
@@ -112,7 +136,7 @@ span {
    font-family: Roboto slab;
    font-weight: 400;
    letter-spacing: 3px;
-   color: var(--clr-primary-800);
+   color: hsl(var(--clr-primary-800));
 
    &:focus {
       outline: none;

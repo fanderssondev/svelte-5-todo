@@ -16,7 +16,7 @@
 
 <button
 	id="theme-btn"
-	aria-label={darkMode ? 'Switch to light theme' : 'Switch to dark theme'}
+	aria-label={darkMode ? 'Light theme' : 'Dark theme'}
 	onclick={handleDarkModeToggle}
 	><svg class:dark={darkMode} class:light={!darkMode} viewBox="0 0 300 300" fill="none">
 		<circle id="moon" cx="150" cy="148" r="65" />
@@ -64,8 +64,8 @@
 		&::after {
 			content: attr(aria-label);
 			position: absolute;
-			color: var(--clr-primary-700);
-			background-color: var(--clr-primary-300);
+			color: hsl(var(--clr-primary-700));
+			background-color: hsl(var(--clr-primary-300));
 			width: max-content;
 			font-size: 1rem;
 			line-height: initial;
@@ -86,7 +86,7 @@
 		&:hover,
 		&:focus-visible {
 			opacity: 1;
-			background: hsl(215 27.9% 16.9% / 0.1);
+			background: hsla(var(--clr-primary-600) / 0.1);
 		}
 
 		&:hover::after,
@@ -102,7 +102,7 @@
 	svg {
 		--size: 2rem;
 
-		fill: var(--clr-primary-300);
+		fill: hsl(var(--clr-primary-800));
 		width: var(--size);
 		height: var(--size);
 		cursor: pointer;

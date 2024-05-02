@@ -15,7 +15,8 @@
 // [X]: Add todo
 // [X]: Edit todo
 // [X]: Delete todo
-// []: Filter todos for all, unfinished and finished todos
+// [X]: Show number of unfinished todos
+// [X]: Filter todos for all, unfinished and finished todos
 // []: Colors for categories
 // []: Duedate for todos
 // []: Login
@@ -24,7 +25,7 @@
 // TODO: Page header
 // [X]: Logo
 // [X]: Login button
-// []: Sign out button
+// []: Sign up button
 // [X]: Toggle darkmode button
 
 // TODO: Start page

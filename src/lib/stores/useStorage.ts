@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { writable, type Writable } from 'svelte/store';
 
 /**
@@ -13,13 +14,13 @@ export const useStorage = <T>(key: string, initialValue: T): Writable<T> => {
 
    const safeLocalStorage = {
       getItem: (key: string) => {
-         if (typeof window !== 'undefined') {
+         if (browser) {
             return localStorage.getItem(key);
          }
          return null;
       },
       setItem: (key: string, value: string) => {
-         if (typeof window !== 'undefined') {
+         if (browser) {
             localStorage.setItem(key, value);
          }
       }

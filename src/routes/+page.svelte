@@ -2,14 +2,29 @@
 	import 'iconify-icon';
 	import { useStorage } from '$lib/stores/useStorage';
 
-	// let initialState: Todo[] = [
-	// 	{ id: crypto.randomUUID(), text: 'Todo 1', completed: false, editing: false },
-	// 	{ id: crypto.randomUUID(), text: 'Todo 2', completed: false, editing: false },
-	// 	{ id: crypto.randomUUID(), text: 'Todo 3', completed: false, editing: false }
-	// ];
-
-	// let todos = $state<Todo[]>(initialState);
 	let todos = useStorage<Todo[]>('todos', []);
+
+	let unfinishied = $derived($todos.filter((todo) => !todo.completed).length);
+
+	type Filters = 'all' | 'unfinished' | 'finished';
+	let filter: Filters = $state('all');
+
+	let filteredTodos = $derived<Todo[]>(setFilter(filter));
+
+	function setFilter(newFilter: Filters): Todo[] {
+		switch (newFilter) {
+			case 'all':
+				return $todos;
+			case 'unfinished':
+				return $todos.filter((todos) => !todos.completed);
+			case 'finished':
+				return $todos.filter((todos) => todos.completed);
+		}
+	}
+
+	function clearFinishedTodos() {
+		$todos = $todos.filter((todo) => !todo.completed);
+	}
 
 	function toggleCompleted(id: string): void {
 		$todos = $todos.map((todo) => {
@@ -60,9 +75,7 @@
 
 	function handleBlur(event: FocusEvent, id: string): void {
 		const targetElement = event.target as HTMLInputElement;
-		const newText = targetElement.value;
 
-		// editTodo(id, newText);
 		const index = $todos.findIndex((todo) => todo.id == id);
 		$todos[index].editing = false;
 		targetElement.blur();
@@ -73,17 +86,44 @@
 	}
 </script>
 
-<pre>
-   {JSON.stringify($todos, null, 2)}
+<!-- <pre>
+   {JSON.stringify(filteredTodos, null, 2)}
 </pre>
+
+<pre>
+   {JSON.stringify(filter, null, 2)}
+</pre> -->
 
 <h1>Todos</h1>
 
 <input class="input-form" type="text" placeholder="Add todo" onkeydown={(e) => addTodo(e)} />
 
+<div class="filters">
+	<p>{unfinishied} unfinishied {unfinishied === 1 ? 'todo' : 'todos'}</p>
+	<button
+		class:active-filter={filter === 'all'}
+		class="filter-btn"
+		disabled={filter === 'all'}
+		onclick={() => (filter = 'all')}>All</button
+	>
+	<button
+		class:active-filter={filter === 'unfinished'}
+		class="filter-btn"
+		disabled={filter === 'unfinished'}
+		onclick={() => (filter = 'unfinished')}>Unfinishied</button
+	>
+	<button
+		class:active-filter={filter === 'finished'}
+		class="filter-btn"
+		disabled={filter === 'finished'}
+		onclick={() => (filter = 'finished')}>Finished</button
+	>
+	<button class="clear-btn" onclick={clearFinishedTodos}>Clear Finished</button>
+</div>
+
 <ul>
-	{#each $todos as todo}
-		<li>
+	{#each filteredTodos as todo}
+		<li class:completed={todo.completed}>
 			<input
 				class="sr-only"
 				aria-label="Toggle todo completed"
@@ -93,6 +133,7 @@
 			{#if todo.completed}
 				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
+
 				<iconify-icon icon="mdi:checkbox-marked-outline" onclick={() => toggleCompleted(todo.id)}
 				></iconify-icon>
 			{:else}
@@ -113,9 +154,7 @@
 				/>
 			{:else}
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<span class:completed={todo.completed} ondblclick={() => toggleEditing(todo.id)}
-					>{todo.text}</span
-				>
+				<span ondblclick={() => toggleEditing(todo.id)}>{todo.text}</span>
 				<button onclick={() => deleteTodo(todo.id)}>
 					<iconify-icon class="delete-icon" icon="mdi:delete-forever-outline"></iconify-icon>
 				</button>
@@ -134,7 +173,7 @@
 
 	.input-form {
 		margin-bottom: 2rem;
-		background-color: var(--clr-primary-400);
+		background-color: hsl(var(--clr-primary-400));
 	}
 
 	li {
@@ -143,7 +182,7 @@
 		flex-direction: column;
 		margin-bottom: 2rem;
 		padding-left: 3em;
-		background-color: var(--clr-primary-400);
+		background-color: hsl(var(--clr-primary-400));
 		border-radius: 5px;
 
 		input,
@@ -162,11 +201,6 @@
 
 		span {
 			padding-right: 2rem;
-
-			&.completed {
-				opacity: 0.3;
-				text-decoration: line-through;
-			}
 		}
 
 		& iconify-icon {
@@ -186,6 +220,65 @@
 			&:hover {
 				opacity: 1;
 			}
+		}
+
+		&.completed {
+			opacity: 0.4;
+			text-decoration: line-through;
+		}
+	}
+
+	.filters {
+		margin-top: 4rem;
+		margin-bottom: 4rem;
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		padding: 1rem 1rem;
+		background-color: hsl(var(--clr-primary-500));
+		border-radius: 5px;
+		font-size: 1.25rem;
+
+		p {
+			flex: 1;
+		}
+
+		& button {
+			background-color: red;
+			border-radius: 5px;
+			font-size: inherit;
+			padding: 14px 24px 16px;
+			font-weight: 500;
+			letter-spacing: 3px;
+			display: inline-block;
+			outline: 0;
+			border: 0;
+			cursor: pointer;
+			line-height: 1;
+			transition:
+				transform 200ms,
+				background 200ms;
+
+			&:not([disabled]):hover {
+				transform: translateY(-2px);
+			}
+		}
+
+		& .filter-btn {
+			color: hsl(var(--clr-primary-200));
+			background: hsl(var(--clr-accent-700));
+
+			&.active-filter {
+				color: hsl(var(--clr-primary-800));
+				background: hsl(var(--clr-accent-600));
+				border: 2px solid hsl(var(--clr-primary-800));
+			}
+		}
+
+		& .clear-btn {
+			background: transparent;
+			color: hsl(var(--clr-primary-800));
+			box-shadow: 0 0 0 3px hsl(var(--clr-primary-800)) inset;
 		}
 	}
 
