@@ -7,7 +7,7 @@
 // [X]: Create input form
 // [X]: Define Todo type
 // [X]: List todos
-// []: Create buttons for all, unfinished and finished todos
+// [X]: Create buttons for all, unfinished and finished todos
 // []: Refactor to components
 
 // TODO: Funcionality

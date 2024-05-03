@@ -1,21 +1,22 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { darkMode } from '$lib/stores/useTheme';
 
-	let darkMode = $state(false);
+	// let darkMode = useTheme
 
 	$effect(() => {
 		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			darkMode = true;
+			$darkMode = true;
 		}
 	});
 
 	function handleDarkModeToggle(): void {
-		darkMode = !darkMode;
+		$darkMode = !$darkMode;
 	}
 
 	$effect(() => {
 		if (browser) {
-			darkMode ? (document.body.dataset.theme = 'dark') : (document.body.dataset.theme = '');
+			$darkMode ? (document.body.dataset.theme = 'dark') : (document.body.dataset.theme = '');
 		}
 	});
 </script>
