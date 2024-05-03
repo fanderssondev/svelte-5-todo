@@ -14,7 +14,7 @@
 	function setFilter(newFilter: Filters): Todo[] {
 		switch (newFilter) {
 			case 'all':
-				return $todos;
+				return [...$todos];
 			case 'unfinished':
 				return $todos.filter((todos) => !todos.completed);
 			case 'finished':
@@ -67,14 +67,16 @@
 		}
 		if (e.key !== 'Enter') return;
 
-		inputElement.blur();
 		$todos[index].text = inputElement.value;
 		$todos[index].editing = false;
 		$todos[index].completed = false;
+		inputElement.blur();
 	}
 
 	function handleBlur(event: FocusEvent, id: string): void {
 		const targetElement = event.target as HTMLInputElement;
+
+		console.log(targetElement.value);
 
 		const index = $todos.findIndex((todo) => todo.id == id);
 		$todos[index].editing = false;
@@ -88,10 +90,6 @@
 
 <!-- <pre>
    {JSON.stringify(filteredTodos, null, 2)}
-</pre>
-
-<pre>
-   {JSON.stringify(filter, null, 2)}
 </pre> -->
 
 <h1>Todos</h1>
@@ -99,7 +97,7 @@
 <input class="input-form" type="text" placeholder="Add todo" onkeydown={(e) => addTodo(e)} />
 
 <div class="filters">
-	<p>{unfinishied} unfinishied {unfinishied === 1 ? 'todo' : 'todos'}</p>
+	<p><span>{unfinishied}</span> unfinishied {unfinishied === 1 ? 'todo' : 'todos'}</p>
 	<button
 		class:active-filter={filter === 'all'}
 		class="filter-btn"
@@ -150,7 +148,7 @@
 					autofocus
 					value={todo.text}
 					onkeydown={(e) => editTodo(todo.id, e)}
-					onblur={() => toggleEditing(todo.id)}
+					onblur={(e) => handleBlur(e, todo.id)}
 				/>
 			{:else}
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -228,6 +226,7 @@
 		}
 	}
 
+	/* Filter buttons */
 	.filters {
 		margin-top: 4rem;
 		margin-bottom: 4rem;
@@ -241,6 +240,15 @@
 
 		p {
 			flex: 1;
+			font-family: 'Roboto';
+			font-size: 1.25rem;
+			letter-spacing: 2px;
+			color: hsl(var(--clr-primary-700));
+
+			& span {
+				padding: 0;
+				color: hsl(var(--clr-primary-800));
+			}
 		}
 
 		& button {

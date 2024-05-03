@@ -17,6 +17,7 @@
 // [X]: Delete todo
 // [X]: Show number of unfinished todos
 // [X]: Filter todos for all, unfinished and finished todos
+// []: Percistance for darkmode
 // []: Colors for categories
 // []: Duedate for todos
 // []: Login

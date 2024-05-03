@@ -3,13 +3,19 @@
 
 	let darkMode = $state(false);
 
+	$effect(() => {
+		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			darkMode = true;
+		}
+	});
+
 	function handleDarkModeToggle(): void {
 		darkMode = !darkMode;
 	}
 
 	$effect(() => {
 		if (browser) {
-			darkMode ? (document.body.dataset.theme = 'dark') : (document.body.dataset.theme = 'light');
+			darkMode ? (document.body.dataset.theme = 'dark') : (document.body.dataset.theme = '');
 		}
 	});
 </script>
