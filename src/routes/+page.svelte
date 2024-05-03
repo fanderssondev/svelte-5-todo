@@ -224,6 +224,10 @@
 			opacity: 0.4;
 			text-decoration: line-through;
 		}
+
+		&:has(input:focus) {
+			outline: 3px solid hsl(var(--clr-primary-700));
+		}
 	}
 
 	/* Filter buttons */
