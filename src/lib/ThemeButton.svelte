@@ -1,31 +1,35 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { darkMode } from '$lib/stores/useTheme';
+	import { useTheme } from './stores/useTheme..svelte';
+
+	let darkMode = useTheme();
 
 	// let darkMode = useTheme
 
-	$effect(() => {
-		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			$darkMode = true;
-		}
-	});
+	// $effect(() => {
+	// 	if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+	// 		$darkMode = true;
+	// 	}
+	// });
 
-	function handleDarkModeToggle(): void {
-		$darkMode = !$darkMode;
-	}
-
-	$effect(() => {
-		if (browser) {
-			$darkMode ? (document.body.dataset.theme = 'dark') : (document.body.dataset.theme = '');
-		}
-	});
+	// $effect(() => {
+	// 	console.log(darkMode.darkMode);
+	// 	if (browser) {
+	// 		darkMode ? (document.body.dataset.theme = 'dark') : (document.body.dataset.theme = '');
+	// 	}
+	// });
 </script>
 
 <button
 	id="theme-btn"
-	aria-label={darkMode ? 'Light theme' : 'Dark theme'}
-	onclick={handleDarkModeToggle}
-	><svg class:dark={darkMode} class:light={!darkMode} viewBox="0 0 300 300" fill="none">
+	aria-label={darkMode.darkMode ? 'Light theme' : 'Dark theme'}
+	onclick={darkMode.toggleDarkmode}
+	><svg
+		class:dark={darkMode.darkMode}
+		class:light={!darkMode.darkMode}
+		viewBox="0 0 300 300"
+		fill="none"
+	>
 		<circle id="moon" cx="150" cy="148" r="65" />
 		<path
 			id="sun"

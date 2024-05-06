@@ -238,7 +238,7 @@
 		align-items: center;
 		gap: 1.25rem;
 		padding: 1rem 1rem;
-		background-color: hsl(var(--clr-primary-500));
+		background-color: hsl(var(--clr-primary-300));
 		border-radius: 5px;
 		font-size: 1.25rem;
 
