@@ -1,10 +1,12 @@
 <script lang="ts">
 	import 'iconify-icon';
 	import { useStorage } from '$lib/stores/useStorage';
+	import Filters from '$lib/components/FilterSection.svelte';
+	import FilterSection from '$lib/components/FilterSection.svelte';
 
 	let todos = useStorage<Todo[]>('todos', []);
 
-	let unfinishied = $derived($todos.filter((todo) => !todo.completed).length);
+	let unfinished = $derived($todos.filter((todo) => !todo.completed).length);
 
 	type Filters = 'all' | 'unfinished' | 'finished';
 	let filter: Filters = $state('all');
@@ -97,7 +99,7 @@
 <input class="input-form" type="text" placeholder="Add todo" onkeydown={(e) => addTodo(e)} />
 
 <div class="filters">
-	<p><span>{unfinishied}</span> unfinishied {unfinishied === 1 ? 'todo' : 'todos'}</p>
+	<p><span>{unfinished}</span> unfinishied {unfinished === 1 ? 'todo' : 'todos'}</p>
 	<button
 		class:active-filter={filter === 'all'}
 		class="filter-btn"
@@ -171,7 +173,7 @@
 
 	.input-form {
 		margin-bottom: 2rem;
-		background-color: hsl(var(--clr-primary-400));
+		background-color: hsl(var(--clr-primary-300));
 	}
 
 	li {
@@ -180,12 +182,11 @@
 		flex-direction: column;
 		margin-bottom: 2rem;
 		padding-left: 3em;
-		background-color: hsl(var(--clr-primary-400));
+		background-color: hsl(var(--clr-primary-300));
 		border-radius: 5px;
 
 		input,
 		span {
-			/* padding-left: 5rem; */
 			background-color: transparent;
 
 			&:before {

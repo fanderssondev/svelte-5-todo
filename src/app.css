@@ -106,6 +106,8 @@ ul {
 
 body {
    background-color: hsl(var(--clr-primary-200));
+   min-height: 100vh;
+   min-height: 100dvh;
 }
 
 ol,

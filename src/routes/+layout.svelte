@@ -1,17 +1,18 @@
 <script lang="ts">
 	import '../app.css';
-	import ThemeButton from '$lib/ThemeButton.svelte';
-
-	let darkMode = false;
+	import DarkModeButton from '$lib/components/DarkModeButton.svelte';
 </script>
+
+<svelte:head>
+	<title>Svelte 5 Todos</title>
+</svelte:head>
 
 <header>
 	<div>
 		<iconify-icon icon="mdi:checkbox-multiple-marked-circle-outline"></iconify-icon>
-		<!-- <h2>Svelte 5 Todo list</h2> -->
 		<div class="buttons">
 			<button>Login</button>
-			<ThemeButton />
+			<DarkModeButton />
 		</div>
 	</div>
 </header>
@@ -63,7 +64,7 @@
 
 	iconify-icon {
 		font-size: 4rem;
-		color: hsl(var(--clr-primary-800));
+		color: hsl(var(--clr-primary-700));
 	}
 
 	main {
