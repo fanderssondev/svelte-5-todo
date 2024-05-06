@@ -9,9 +9,18 @@
 
 <header>
 	<div>
-		<iconify-icon icon="mdi:checkbox-multiple-marked-circle-outline"></iconify-icon>
+		<form action="/" method="get">
+			<button>
+				<iconify-icon icon="mdi:checkbox-multiple-marked-circle-outline"></iconify-icon>
+			</button>
+		</form>
 		<div class="buttons">
-			<button>Login</button>
+			<form action="/register" method="get">
+				<button class="register">Register</button>
+			</form>
+			<form action="/login" method="get">
+				<button class="login">Login</button>
+			</form>
 			<DarkModeButton />
 		</div>
 	</div>
@@ -51,6 +60,10 @@
 					color: hsl(var(--clr-primary-300));
 					font-size: 1.5rem;
 					letter-spacing: 3px;
+
+					&.register {
+						background-color: hsl(var(--clr-accent-600));
+					}
 
 					&:hover {
 						cursor: pointer;
