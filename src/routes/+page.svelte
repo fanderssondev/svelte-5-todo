@@ -1,8 +1,6 @@
 <script lang="ts">
 	import 'iconify-icon';
 	import { useStorage } from '$lib/stores/useStorage';
-	import Filters from '$lib/components/FilterSection.svelte';
-	import FilterSection from '$lib/components/FilterSection.svelte';
 
 	let todos = useStorage<Todo[]>('todos', []);
 

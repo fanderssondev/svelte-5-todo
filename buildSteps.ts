@@ -21,7 +21,7 @@
 // []: Colors for categories
 // []: Duedate for todos
 // []: Login
-// []: Database
+// [X]: Database
 
 // TODO: Page header
 // [X]: Logo
