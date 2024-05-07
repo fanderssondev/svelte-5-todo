@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { enhance } from '$app/forms';
 	import '../app.css';
+	import 'iconify-icon';
 	import DarkModeButton from '$lib/components/DarkModeButton.svelte';
 </script>
 
