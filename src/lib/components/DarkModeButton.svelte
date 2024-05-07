@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { useTheme } from '$lib/stores/useTheme..svelte';
+	import { useTheme } from '$lib/stores/useTheme.svelte';
 
 	let theme = useTheme();
 
