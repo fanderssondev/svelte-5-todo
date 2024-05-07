@@ -20,13 +20,13 @@
 // [X]: Percistance for darkmode
 // []: Colors for categories
 // []: Duedate for todos
-// []: Login
+// [X]: Login
 // [X]: Database
 
 // TODO: Page header
 // [X]: Logo
 // [X]: Login button
-// []: Sign up button
+// [X]: Sign up button
 // [X]: Toggle darkmode button
 
 // TODO: Start page

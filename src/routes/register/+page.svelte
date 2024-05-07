@@ -1,12 +1,15 @@
 <script lang="ts">
-	export let form;
+	import { enhance } from '$app/forms';
+	import type { ActionData } from './$types';
+
+	export let form: ActionData;
 </script>
 
 <section>
 	<div>
 		<h1>Register</h1>
 
-		<form action="?/register" method="POST">
+		<form action="?/register" method="POST" use:enhance>
 			<div>
 				<label for="username">Username</label>
 				<input id="username" name="username" type="text" placeholder="Username" required />

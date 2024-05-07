@@ -4,8 +4,11 @@ import bcrypt from 'bcrypt';
 
 import { db } from '$lib/database';
 
-export const load: PageServerLoad = async () => {
-   // TODO:
+export const load: PageServerLoad = async ({ locals }) => {
+   // redirect the user if logged in
+   if (locals.user) {
+      redirect(302, '/dashboard');
+   }
 };
 
 const login: Action = async ({ cookies, request }) => {
@@ -58,7 +61,7 @@ const login: Action = async ({ cookies, request }) => {
    });
 
    // redirect the user
-   redirect(302, '/');
+   redirect(302, '/dashboard');
 };
 
 export const actions: Actions = { login };

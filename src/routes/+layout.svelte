@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import { enhance } from '$app/forms';
 	import '../app.css';
 	import DarkModeButton from '$lib/components/DarkModeButton.svelte';
 </script>
@@ -9,20 +11,23 @@
 
 <header>
 	<div>
-		<form action="/" method="get">
-			<button>
-				<iconify-icon icon="mdi:checkbox-multiple-marked-circle-outline"></iconify-icon>
-			</button>
-		</form>
-		<div class="buttons">
-			<form action="/register" method="get">
-				<button class="register">Register</button>
-			</form>
-			<form action="/login" method="get">
-				<button class="login">Login</button>
-			</form>
-			<DarkModeButton />
-		</div>
+		<a href="/"><iconify-icon icon="mdi:checkbox-multiple-marked-circle-outline"></iconify-icon></a>
+		{#if $page.data.user}
+			<h3>Welcome {$page.data.user.name}</h3>
+		{/if}
+		<nav class="links">
+			{#if !$page.data.user}
+				<a class="register" href="/register">Register</a>
+				<a class="link" href="/login">Login</a>
+			{/if}
+
+			{#if $page.data.user}
+				<form action="/logout" method="post" use:enhance>
+					<button type="submit">Log out</button>
+				</form>
+			{/if}
+		</nav>
+		<DarkModeButton />
 	</div>
 </header>
 
@@ -43,33 +48,40 @@
 		& > div {
 			display: flex;
 			justify-content: space-between;
+			gap: 1rem;
 			align-items: center;
 			margin: 0 auto;
 			padding-inline: 2rem;
 
-			& .buttons {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				gap: 2rem;
+			& > a {
+				flex: 1;
+			}
+		}
 
-				& button {
-					padding: 0.2em 0.7em;
-					border-radius: 5px;
-					background-color: hsl(var(--clr-action-700));
-					color: hsl(var(--clr-primary-300));
-					font-size: 1.5rem;
-					letter-spacing: 3px;
+		nav {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 2rem;
 
-					&.register {
-						background-color: hsl(var(--clr-accent-600));
-					}
+			& a,
+			& button {
+				padding: 0.2em 0.7em;
+				border-radius: 5px;
+				background-color: hsl(var(--clr-action-700));
+				color: hsl(var(--clr-primary-300));
+				font-size: 1.5rem;
+				letter-spacing: 3px;
+				text-decoration: none;
 
-					&:hover {
-						cursor: pointer;
-						background-color: hsl(var(--clr-action-500));
-						color: hsl(var(--clr-primary-700));
-					}
+				&.register {
+					background-color: hsl(var(--clr-accent-600));
+				}
+
+				&:hover {
+					cursor: pointer;
+					background-color: hsl(var(--clr-action-500));
+					color: hsl(var(--clr-primary-700));
 				}
 			}
 		}
