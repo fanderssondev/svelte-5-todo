@@ -1,10 +1,22 @@
 <script lang="ts">
 	import 'iconify-icon';
+	import { page } from '$app/stores';
+
 	import { useStorage } from '$lib/stores/useStorage';
 
-	let todos = useStorage<Todo[]>('todos', []);
+	// let todos = useStorage<Todo[]>('todos', []);
 
-	let unfinished = $derived($todos.filter((todo) => !todo.completed).length);
+	interface Todo {
+		id: string;
+		text: string;
+		completed: boolean;
+		userId: string;
+		editing: boolean;
+	}
+
+	let todos = $state<Todo[]>($page.data.todos ?? []);
+
+	let unfinished = $derived(todos.filter((todo) => !todo.completed).length);
 
 	type Filters = 'all' | 'unfinished' | 'finished';
 	let filter: Filters = $state('all');
@@ -14,20 +26,20 @@
 	function setFilter(newFilter: Filters): Todo[] {
 		switch (newFilter) {
 			case 'all':
-				return [...$todos];
+				return [...todos];
 			case 'unfinished':
-				return $todos.filter((todos) => !todos.completed);
+				return todos.filter((todos) => !todos.completed);
 			case 'finished':
-				return $todos.filter((todos) => todos.completed);
+				return todos.filter((todos) => todos.completed);
 		}
 	}
 
 	function clearFinishedTodos() {
-		$todos = $todos.filter((todo) => !todo.completed);
+		todos = todos.filter((todo) => !todo.completed);
 	}
 
 	function toggleCompleted(id: string): void {
-		$todos = $todos.map((todo) => {
+		todos = todos.map((todo) => {
 			if (todo.id === id) {
 				return { ...todo, completed: !todo.completed };
 			}
@@ -41,35 +53,35 @@
 		const inputElement = e.target as HTMLInputElement;
 		let text = inputElement.value;
 
-		const newTodo: Todo = {
-			id: crypto.randomUUID(),
-			text,
-			completed: false,
-			editing: false
-		};
+		// const newTodo: Todo = {
+		// 	id: crypto.randomUUID(),
+		// 	text,
+		// 	completed: false,
+		// 	editing: false
+		// };
 
-		$todos = [...$todos, newTodo];
+		// todos = [...todos, newTodo];
 		inputElement.value = '';
 	}
 
 	function toggleEditing(id: string): void {
-		const index = $todos.findIndex((todo) => todo.id == id);
-		$todos[index].editing = !$todos[index].editing;
+		const index = todos.findIndex((todo) => todo.id == id);
+		todos[index].editing = !todos[index].editing;
 	}
 
 	function editTodo(id: string, e: KeyboardEvent): void {
 		const inputElement = e.target as HTMLInputElement;
-		const index = $todos.findIndex((todo) => todo.id == id);
+		const index = todos.findIndex((todo) => todo.id == id);
 
 		if (e.key === 'Escape') {
-			$todos[index].editing = false;
+			todos[index].editing = false;
 			inputElement.blur();
 		}
 		if (e.key !== 'Enter') return;
 
-		$todos[index].text = inputElement.value;
-		$todos[index].editing = false;
-		$todos[index].completed = false;
+		todos[index].text = inputElement.value;
+		todos[index].editing = false;
+		todos[index].completed = false;
 		inputElement.blur();
 	}
 
@@ -78,19 +90,19 @@
 
 		console.log(targetElement.value);
 
-		const index = $todos.findIndex((todo) => todo.id == id);
-		$todos[index].editing = false;
+		const index = todos.findIndex((todo) => todo.id == id);
+		todos[index].editing = false;
 		targetElement.blur();
 	}
 
 	function deleteTodo(id: string): void {
-		$todos = $todos.filter((todo) => todo.id !== id);
+		todos = todos.filter((todo) => todo.id !== id);
 	}
 </script>
 
-<!-- <pre>
+<pre>
    {JSON.stringify(filteredTodos, null, 2)}
-</pre> -->
+</pre>
 
 <h1>Todos</h1>
 

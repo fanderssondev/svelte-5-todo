@@ -5,19 +5,20 @@ declare global {
       // interface Error {}
       interface Locals {
          user: {
-            name: string;
+            id: string,
+            name: string,
          };
       }
       // interface PageData {}
       // interface PageState {}
       // interface Platform {}
    }
-   interface Todo {
-      id: string,
-      text: string,
-      completed: boolean;
-      editing: boolean;
-   }
+   // interface Todo {
+   //    text: string,
+   //    completed: boolean;
+   //    userId: string,
+   //    editing: boolean;
+   // }
 }
 
 export {};
