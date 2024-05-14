@@ -61,7 +61,7 @@ const login: Action = async ({ cookies, request }) => {
    });
 
    // redirect the user
-   redirect(302, '/dashboard');
+   redirect(307, '/dashboard');
 };
 
 export const actions: Actions = { login };

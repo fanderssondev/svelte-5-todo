@@ -6,13 +6,13 @@
 
 	// let todos = useStorage<Todo[]>('todos', []);
 
-	interface Todo {
-		id: string;
-		text: string;
-		completed: boolean;
-		userId: string;
-		editing: boolean;
-	}
+	// interface Todo {
+	// 	id: string;
+	// 	text: string;
+	// 	completed: boolean;
+	// 	userId: string;
+	// 	editing: boolean;
+	// }
 
 	let todos = $state<Todo[]>($page.data.todos ?? []);
 
@@ -39,29 +39,7 @@
 	}
 
 	function toggleCompleted(id: string): void {
-		todos = todos.map((todo) => {
-			if (todo.id === id) {
-				return { ...todo, completed: !todo.completed };
-			}
-			return todo;
-		});
-	}
-
-	function addTodo(e: KeyboardEvent): void {
-		if (e.key !== 'Enter') return;
-
-		const inputElement = e.target as HTMLInputElement;
-		let text = inputElement.value;
-
-		// const newTodo: Todo = {
-		// 	id: crypto.randomUUID(),
-		// 	text,
-		// 	completed: false,
-		// 	editing: false
-		// };
-
-		// todos = [...todos, newTodo];
-		inputElement.value = '';
+		todos.map((todo) => (todo.id === id ? (todo.completed = !todo.completed) : todo));
 	}
 
 	function toggleEditing(id: string): void {
@@ -106,7 +84,11 @@
 
 <h1>Todos</h1>
 
-<input class="input-form" type="text" placeholder="Add todo" onkeydown={(e) => addTodo(e)} />
+<form action="?/create" method="post">
+	<!-- svelte-ignore a11y_autofocus -->
+	<input class="input-form" type="text" name="text" autofocus placeholder="Add todo" />
+	<button type="submit">create</button>
+</form>
 
 <div class="filters">
 	<p><span>{unfinished}</span> unfinishied {unfinished === 1 ? 'todo' : 'todos'}</p>
@@ -134,34 +116,31 @@
 <ul>
 	{#each filteredTodos as todo}
 		<li class:completed={todo.completed}>
-			<input
-				class="sr-only"
-				aria-label="Toggle todo completed"
-				type="checkbox"
-				checked={todo.completed}
-			/>
-			{#if todo.completed}
-				<!-- svelte-ignore a11y_click_events_have_key_events -->
-				<!-- svelte-ignore a11y_no_static_element_interactions -->
-
-				<iconify-icon icon="mdi:checkbox-marked-outline" onclick={() => toggleCompleted(todo.id)}
-				></iconify-icon>
-			{:else}
-				<!-- svelte-ignore a11y_click_events_have_key_events -->
-				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<iconify-icon icon="mdi:checkbox-blank-outline" onclick={() => toggleCompleted(todo.id)}
-				></iconify-icon>
-			{/if}
+			<form action="?/toggleCompleted" method="post">
+				<input type="hidden" name="id" value={todo.id} />
+				<input type="hidden" name="completed" value={todo.completed} />
+				<button aria-label="Toggle todo completed">
+					{#if todo.completed}
+						<!-- svelte-ignore a11y_click_events_have_key_events -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<iconify-icon
+							icon="mdi:checkbox-marked-outline"
+							onclick={() => toggleCompleted(todo.id)}
+						></iconify-icon>
+					{:else}
+						<!-- svelte-ignore a11y_click_events_have_key_events -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<iconify-icon icon="mdi:checkbox-blank-outline" onclick={() => toggleCompleted(todo.id)}
+						></iconify-icon>
+					{/if}
+				</button>
+			</form>
 
 			{#if todo.editing}
-				<!-- svelte-ignore a11y_autofocus -->
-				<input
-					type="text"
-					autofocus
-					value={todo.text}
-					onkeydown={(e) => editTodo(todo.id, e)}
-					onblur={(e) => handleBlur(e, todo.id)}
-				/>
+				<form action="?/update" method="post">
+					<input type="hidden" name="id" value={todo.id} />
+					<input type="text" name="text" autofocus value={todo.text} />
+				</form>
 			{:else}
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<span ondblclick={() => toggleEditing(todo.id)}>{todo.text}</span>
