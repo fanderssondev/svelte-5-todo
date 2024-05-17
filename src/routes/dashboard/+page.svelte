@@ -115,7 +115,7 @@
 </div>
 
 <ul>
-	{#each filteredTodos as todo}
+	{#each $page.data.todos as todo}
 		<li class:completed={todo.completed}>
 			<form action="?/toggleCompleted" method="post" use:enhance>
 				<input type="hidden" name="id" value={todo.id} />
@@ -145,9 +145,12 @@
 			{:else}
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<span ondblclick={() => toggleEditing(todo.id)}>{todo.text}</span>
-				<button onclick={() => deleteTodo(todo.id)}>
-					<iconify-icon class="delete-icon" icon="mdi:delete-forever-outline"></iconify-icon>
-				</button>
+				<form action="?/delete" method="post" use:enhance>
+					<input type="hidden" name="id" value={todo.id} />
+					<button>
+						<iconify-icon class="delete-icon" icon="mdi:delete-forever-outline"></iconify-icon>
+					</button>
+				</form>
 			{/if}
 		</li>
 	{/each}

@@ -54,5 +54,13 @@ export const actions: Actions = {
             completed: isCompleted
          }
       });
+   },
+   delete: async ({ request, locals }) => {
+      const data = await request.formData();
+      const id = data.get('id') as string;
+
+      const response = await db.todo.delete({
+         where: { id, userId: locals.user.id }
+      });
    }
 };
