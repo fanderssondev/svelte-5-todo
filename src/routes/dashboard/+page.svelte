@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 
 	import { useStorage } from '$lib/stores/useStorage';
+	import { enhance } from '$app/forms';
 
 	// let todos = useStorage<Todo[]>('todos', []);
 
@@ -78,16 +79,16 @@
 	}
 </script>
 
-<pre>
+<!-- <pre>
    {JSON.stringify(filteredTodos, null, 2)}
-</pre>
+</pre> -->
 
 <h1>Todos</h1>
 
-<form action="?/create" method="post">
+// BUG use:enhance don't update list
+<form action="?/create" method="post" use:enhance>
 	<!-- svelte-ignore a11y_autofocus -->
 	<input class="input-form" type="text" name="text" autofocus placeholder="Add todo" />
-	<button type="submit">create</button>
 </form>
 
 <div class="filters">
@@ -116,7 +117,7 @@
 <ul>
 	{#each filteredTodos as todo}
 		<li class:completed={todo.completed}>
-			<form action="?/toggleCompleted" method="post">
+			<form action="?/toggleCompleted" method="post" use:enhance>
 				<input type="hidden" name="id" value={todo.id} />
 				<input type="hidden" name="completed" value={todo.completed} />
 				<button aria-label="Toggle todo completed">
