@@ -64,5 +64,10 @@ export const actions: Actions = {
       await db.todo.delete({
          where: { id, userId: locals.user.id }
       });
+   },
+   clearFinished: async ({ request, locals }) => {
+      await db.todo.deleteMany({
+         where: { completed: true, userId: locals.user.id }
+      });
    }
 };

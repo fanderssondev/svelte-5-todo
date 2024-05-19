@@ -25,7 +25,7 @@
 		</button>
 	</form>
 
-	<form action="?/update" method="post">
+	<form action="?/update" method="post" use:enhance>
 		{#if editing === todo.id}
 			<!-- SECTION edit todo -->
 			<input type="hidden" name="id" value={todo.id} />

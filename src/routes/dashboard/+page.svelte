@@ -1,14 +1,23 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import Todo from '$lib/components/Todo.svelte';
 
-	let { data } = $props();
+	interface Props {
+		data: {
+			todos: Todo[];
+			user: {
+				id: string;
+				name: string;
+			};
+		};
+	}
 
-	// let todos = $state<Todo[]>($page.data.todos ?? []);
+	let { data }: Props = $props();
 
 	type Filters = 'all' | 'unfinished' | 'finished';
 	let filter: Filters = $state('all');
 
-	// let filteredTodos = $derived(setFilter(data.todos, filter));
+	let filteredTodos = $derived<Todo[]>(setFilter(data.todos, filter));
 	let unfinished = $derived(data.todos.filter((todo) => !todo.completed).length);
 
 	let editing = $state<string | null>(null);
@@ -50,8 +59,7 @@
 
 <h1>Todos</h1>
 
-<!-- BUG use:enhance don't update list -->
-<form action="?/create" method="post">
+<form action="?/create" method="post" use:enhance>
 	<!-- svelte-ignore a11y_autofocus -->
 	<input class="input-form" type="text" name="text" autofocus placeholder="Add todo" />
 </form>
@@ -76,12 +84,13 @@
 		disabled={filter === 'finished'}
 		onclick={() => (filter = 'finished')}>Finished</button
 	>
-	<button class="clear-btn">Clear Finished</button>
+	<form action="?/clearFinished" method="post" use:enhance>
+		<button class="clear-btn">Clear Finished</button>
+	</form>
 </div>
 
 <ul>
-	<!-- FIXME Change for filteredTodos -->
-	{#each data.todos as todo (todo.id)}
+	{#each filteredTodos as todo (todo.id)}
 		<Todo {todo} {editing} {toggleEditing} />
 	{/each}
 </ul>
