@@ -82,9 +82,7 @@
 <ul>
 	<!-- FIXME Change for filteredTodos -->
 	{#each data.todos as todo (todo.id)}
-		<li class:completed={todo.completed}>
-			<Todo {todo} {editing} {toggleEditing} />
-		</li>
+		<Todo {todo} {editing} {toggleEditing} />
 	{/each}
 </ul>
 
@@ -99,21 +97,6 @@
 	.input-form {
 		margin-bottom: 2rem;
 		background-color: hsl(var(--clr-primary-300));
-	}
-
-	li {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		margin-bottom: 2rem;
-		padding-left: 3em;
-		background-color: hsl(var(--clr-primary-300));
-		border-radius: 5px;
-
-		&.completed {
-			opacity: 0.4;
-			text-decoration: line-through;
-		}
 	}
 
 	/* Filter buttons */

@@ -131,7 +131,6 @@ button {
 input[type='text'],
 input[type='password'],
 span {
-
    border: none;
    padding: 0.7em 1.25em;
    border-radius: 5px;

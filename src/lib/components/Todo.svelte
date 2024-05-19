@@ -11,44 +11,69 @@
 	let { todo, editing, toggleEditing }: Props = $props();
 </script>
 
-<form action="?/toggleCompleted" method="post" use:enhance>
-	<!-- SECTION toggle completed -->
-	<input type="hidden" name="id" value={todo.id} />
-	<input type="hidden" name="completed" value={todo.completed} />
-	<button aria-label="Toggle todo completed">
-		{#if todo.completed}
-			<iconify-icon icon="mdi:checkbox-marked-outline"></iconify-icon>
-		{:else}
-			<iconify-icon icon="mdi:checkbox-blank-outline"></iconify-icon>
-		{/if}
-	</button>
-</form>
-
-<form action="?/update" method="post">
-	{#if editing === todo.id}
-		<!-- SECTION edit todo -->
+<li class:completed={todo.completed}>
+	<form action="?/toggleCompleted" method="post" use:enhance>
+		<!-- SECTION toggle completed -->
 		<input type="hidden" name="id" value={todo.id} />
-		<!-- svelte-ignore a11y_autofocus -->
-		<input
-			type="text"
-			name="text"
-			autofocus
-			onblur={() => toggleEditing(todo.id)}
-			value={todo.text}
-		/>
-	{:else}
-		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<span ondblclick={() => toggleEditing(todo.id)}>{todo.text}</span>
-		<!-- <form action="?/delete" method="post" use:enhance> -->
-		<!-- SECTION delete todo -->
-		<input type="hidden" name="id" value={todo.id} />
-		<button formaction="?/delete">
-			<iconify-icon class="delete-icon" icon="mdi:delete-forever-outline"></iconify-icon>
+		<input type="hidden" name="completed" value={todo.completed} />
+		<button aria-label="Toggle todo completed">
+			{#if todo.completed}
+				<iconify-icon icon="mdi:checkbox-marked-outline"></iconify-icon>
+			{:else}
+				<iconify-icon icon="mdi:checkbox-blank-outline"></iconify-icon>
+			{/if}
 		</button>
-	{/if}
-</form>
+	</form>
+
+	<form action="?/update" method="post">
+		{#if editing === todo.id}
+			<!-- SECTION edit todo -->
+			<input type="hidden" name="id" value={todo.id} />
+			<!-- svelte-ignore a11y_autofocus -->
+			<input
+				type="text"
+				name="text"
+				autofocus
+				onblur={() => toggleEditing(todo.id)}
+				value={todo.text}
+			/>
+		{:else}
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			<span ondblclick={() => toggleEditing(todo.id)}>{todo.text}</span>
+			<!-- <form action="?/delete" method="post" use:enhance> -->
+			<!-- SECTION delete todo -->
+			<input type="hidden" name="id" value={todo.id} />
+			<button formaction="?/delete">
+				<iconify-icon class="delete-icon" icon="mdi:delete-forever-outline"></iconify-icon>
+			</button>
+		{/if}
+	</form>
+</li>
 
 <style>
+	li {
+		position: relative;
+		display: flex;
+		align-items: center;
+		margin-bottom: 2rem;
+		padding-left: 3em;
+		background-color: hsl(var(--clr-primary-300));
+		border-radius: 5px;
+		min-height: 5em;
+
+		&.completed {
+			opacity: 0.4;
+
+			& span {
+				text-decoration: line-through;
+			}
+		}
+
+		&:has(input:focus) {
+			outline: 3px solid hsl(var(--clr-primary-700));
+		}
+	}
+
 	input,
 	span {
 		background-color: transparent;
@@ -68,7 +93,6 @@
 
 	iconify-icon {
 		position: absolute;
-		display: inline-block;
 		font-size: 2em;
 		left: 0.5em;
 		top: 50%;
@@ -84,8 +108,4 @@
 			opacity: 1;
 		}
 	}
-
-	/* &:has(input:focus) {
-			outline: 3px solid hsl(var(--clr-primary-700));
-	} */
 </style>
