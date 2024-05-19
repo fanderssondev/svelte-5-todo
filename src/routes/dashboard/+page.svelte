@@ -1,30 +1,19 @@
 <script lang="ts">
-	import 'iconify-icon';
-	import { page } from '$app/stores';
+	import Todo from '$lib/components/Todo.svelte';
 
-	import { useStorage } from '$lib/stores/useStorage';
-	import { enhance } from '$app/forms';
+	let { data } = $props();
 
-	// let todos = useStorage<Todo[]>('todos', []);
-
-	// interface Todo {
-	// 	id: string;
-	// 	text: string;
-	// 	completed: boolean;
-	// 	userId: string;
-	// 	editing: boolean;
-	// }
-
-	let todos = $state<Todo[]>($page.data.todos ?? []);
-
-	let unfinished = $derived(todos.filter((todo) => !todo.completed).length);
+	// let todos = $state<Todo[]>($page.data.todos ?? []);
 
 	type Filters = 'all' | 'unfinished' | 'finished';
 	let filter: Filters = $state('all');
 
-	let filteredTodos = $derived<Todo[]>(setFilter(filter));
+	// let filteredTodos = $derived(setFilter(data.todos, filter));
+	let unfinished = $derived(data.todos.filter((todo) => !todo.completed).length);
 
-	function setFilter(newFilter: Filters): Todo[] {
+	let editing = $state<string | null>(null);
+
+	function setFilter(todos: Todo[], newFilter: Filters): Todo[] {
 		switch (newFilter) {
 			case 'all':
 				return [...todos];
@@ -35,58 +24,34 @@
 		}
 	}
 
-	function clearFinishedTodos() {
-		todos = todos.filter((todo) => !todo.completed);
-	}
-
-	function toggleCompleted(id: string): void {
-		todos.map((todo) => (todo.id === id ? (todo.completed = !todo.completed) : todo));
-	}
-
-	function toggleEditing(id: string): void {
-		const index = todos.findIndex((todo) => todo.id == id);
-		todos[index].editing = !todos[index].editing;
-	}
-
-	function editTodo(id: string, e: KeyboardEvent): void {
-		const inputElement = e.target as HTMLInputElement;
-		const index = todos.findIndex((todo) => todo.id == id);
-
-		if (e.key === 'Escape') {
-			todos[index].editing = false;
-			inputElement.blur();
+	function toggleEditing(id: string) {
+		if (!editing) {
+			editing = id;
+		} else {
+			editing = null;
 		}
-		if (e.key !== 'Enter') return;
-
-		todos[index].text = inputElement.value;
-		todos[index].editing = false;
-		todos[index].completed = false;
-		inputElement.blur();
 	}
 
 	function handleBlur(event: FocusEvent, id: string): void {
 		const targetElement = event.target as HTMLInputElement;
 
 		console.log(targetElement.value);
-
-		const index = todos.findIndex((todo) => todo.id == id);
-		todos[index].editing = false;
 		targetElement.blur();
 	}
 
 	function deleteTodo(id: string): void {
-		todos = todos.filter((todo) => todo.id !== id);
+		data.todos = data.todos.filter((todo) => todo.id !== id);
 	}
 </script>
 
 <!-- <pre>
-   {JSON.stringify(filteredTodos, null, 2)}
+   {JSON.stringify(data.todos, null, 2)}
 </pre> -->
 
 <h1>Todos</h1>
 
-// BUG use:enhance don't update list
-<form action="?/create" method="post" use:enhance>
+<!-- BUG use:enhance don't update list -->
+<form action="?/create" method="post">
 	<!-- svelte-ignore a11y_autofocus -->
 	<input class="input-form" type="text" name="text" autofocus placeholder="Add todo" />
 </form>
@@ -111,47 +76,14 @@
 		disabled={filter === 'finished'}
 		onclick={() => (filter = 'finished')}>Finished</button
 	>
-	<button class="clear-btn" onclick={clearFinishedTodos}>Clear Finished</button>
+	<button class="clear-btn">Clear Finished</button>
 </div>
 
 <ul>
-	{#each $page.data.todos as todo}
+	<!-- FIXME Change for filteredTodos -->
+	{#each data.todos as todo (todo.id)}
 		<li class:completed={todo.completed}>
-			<form action="?/toggleCompleted" method="post" use:enhance>
-				<input type="hidden" name="id" value={todo.id} />
-				<input type="hidden" name="completed" value={todo.completed} />
-				<button aria-label="Toggle todo completed">
-					{#if todo.completed}
-						<!-- svelte-ignore a11y_click_events_have_key_events -->
-						<!-- svelte-ignore a11y_no_static_element_interactions -->
-						<iconify-icon
-							icon="mdi:checkbox-marked-outline"
-							onclick={() => toggleCompleted(todo.id)}
-						></iconify-icon>
-					{:else}
-						<!-- svelte-ignore a11y_click_events_have_key_events -->
-						<!-- svelte-ignore a11y_no_static_element_interactions -->
-						<iconify-icon icon="mdi:checkbox-blank-outline" onclick={() => toggleCompleted(todo.id)}
-						></iconify-icon>
-					{/if}
-				</button>
-			</form>
-
-			{#if todo.editing}
-				<form action="?/update" method="post">
-					<input type="hidden" name="id" value={todo.id} />
-					<input type="text" name="text" autofocus value={todo.text} />
-				</form>
-			{:else}
-				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<span ondblclick={() => toggleEditing(todo.id)}>{todo.text}</span>
-				<form action="?/delete" method="post" use:enhance>
-					<input type="hidden" name="id" value={todo.id} />
-					<button>
-						<iconify-icon class="delete-icon" icon="mdi:delete-forever-outline"></iconify-icon>
-					</button>
-				</form>
-			{/if}
+			<Todo {todo} {editing} {toggleEditing} />
 		</li>
 	{/each}
 </ul>
@@ -178,49 +110,9 @@
 		background-color: hsl(var(--clr-primary-300));
 		border-radius: 5px;
 
-		input,
-		span {
-			background-color: transparent;
-
-			&:before {
-				content: '\00a0';
-			}
-
-			&:after {
-				content: '\00a0\00a0\00a0';
-			}
-		}
-
-		span {
-			padding-right: 2rem;
-		}
-
-		& iconify-icon {
-			position: absolute;
-			display: inline-block;
-			font-size: 2em;
-			left: 0.5em;
-			top: 50%;
-			transform: translateY(-50%);
-		}
-
-		& .delete-icon {
-			left: auto;
-			right: 0.5em;
-			opacity: 0.5;
-
-			&:hover {
-				opacity: 1;
-			}
-		}
-
 		&.completed {
 			opacity: 0.4;
 			text-decoration: line-through;
-		}
-
-		&:has(input:focus) {
-			outline: 3px solid hsl(var(--clr-primary-700));
 		}
 	}
 
@@ -286,15 +178,5 @@
 			color: hsl(var(--clr-primary-800));
 			box-shadow: 0 0 0 3px hsl(var(--clr-primary-800)) inset;
 		}
-	}
-
-	/* Used to be able to have content visually hidden but readable for screen readers */
-	.sr-only {
-		position: absolute;
-		left: -10000px;
-		top: auto;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
 	}
 </style>

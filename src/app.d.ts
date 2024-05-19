@@ -18,9 +18,7 @@ declare global {
       text: string,
       completed: boolean;
       userId: string,
-      editing: boolean;
    }
-   type Todos_DB = Omit<Todo, 'editing'>;
 }
 
 export {};
