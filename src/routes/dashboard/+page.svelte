@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import FilterSection from '$lib/components/FilterSection.svelte';
 	import Todo from '$lib/components/Todo.svelte';
 
 	interface Props {
@@ -14,15 +15,15 @@
 
 	let { data }: Props = $props();
 
-	type Filters = 'all' | 'unfinished' | 'finished';
-	let filter: Filters = $state('all');
+	type Filter = 'all' | 'unfinished' | 'finished';
+	let filter: Filter = $state('all');
 
-	let filteredTodos = $derived<Todo[]>(setFilter(data.todos, filter));
+	let filteredTodos = $derived<Todo[]>(filterTodos(data.todos, filter));
 	let unfinished = $derived(data.todos.filter((todo) => !todo.completed).length);
 
 	let editing = $state<string | null>(null);
 
-	function setFilter(todos: Todo[], newFilter: Filters): Todo[] {
+	function filterTodos(todos: Todo[], newFilter: Filter): Todo[] {
 		switch (newFilter) {
 			case 'all':
 				return [...todos];
@@ -31,6 +32,10 @@
 			case 'finished':
 				return todos.filter((todos) => todos.completed);
 		}
+	}
+
+	function setFilter(newFilter: Filter) {
+		filter = newFilter;
 	}
 
 	function toggleEditing(id: string) {
@@ -47,15 +52,7 @@
 		console.log(targetElement.value);
 		targetElement.blur();
 	}
-
-	function deleteTodo(id: string): void {
-		data.todos = data.todos.filter((todo) => todo.id !== id);
-	}
 </script>
-
-<!-- <pre>
-   {JSON.stringify(data.todos, null, 2)}
-</pre> -->
 
 <h1>Todos</h1>
 
@@ -64,30 +61,7 @@
 	<input class="input-form" type="text" name="text" autofocus placeholder="Add todo" />
 </form>
 
-<div class="filters">
-	<p><span>{unfinished}</span> unfinishied {unfinished === 1 ? 'todo' : 'todos'}</p>
-	<button
-		class:active-filter={filter === 'all'}
-		class="filter-btn"
-		disabled={filter === 'all'}
-		onclick={() => (filter = 'all')}>All</button
-	>
-	<button
-		class:active-filter={filter === 'unfinished'}
-		class="filter-btn"
-		disabled={filter === 'unfinished'}
-		onclick={() => (filter = 'unfinished')}>Unfinishied</button
-	>
-	<button
-		class:active-filter={filter === 'finished'}
-		class="filter-btn"
-		disabled={filter === 'finished'}
-		onclick={() => (filter = 'finished')}>Finished</button
-	>
-	<form action="?/clearFinished" method="post" use:enhance>
-		<button class="clear-btn">Clear Finished</button>
-	</form>
-</div>
+<FilterSection {unfinished} {filter} {setFilter} />
 
 <ul>
 	{#each filteredTodos as todo (todo.id)}
@@ -106,69 +80,5 @@
 	.input-form {
 		margin-bottom: 2rem;
 		background-color: hsl(var(--clr-primary-300));
-	}
-
-	/* Filter buttons */
-	.filters {
-		margin-top: 4rem;
-		margin-bottom: 4rem;
-		display: flex;
-		align-items: center;
-		gap: 1.25rem;
-		padding: 1rem 1rem;
-		background-color: hsl(var(--clr-primary-300));
-		border-radius: 5px;
-		font-size: 1.25rem;
-
-		p {
-			flex: 1;
-			font-family: 'Roboto';
-			font-size: 1.25rem;
-			letter-spacing: 2px;
-			color: hsl(var(--clr-primary-700));
-
-			& span {
-				padding: 0;
-				color: hsl(var(--clr-primary-800));
-			}
-		}
-
-		& button {
-			background-color: red;
-			border-radius: 5px;
-			font-size: inherit;
-			padding: 14px 24px 16px;
-			font-weight: 500;
-			letter-spacing: 3px;
-			display: inline-block;
-			outline: 0;
-			border: 0;
-			cursor: pointer;
-			line-height: 1;
-			transition:
-				transform 200ms,
-				background 200ms;
-
-			&:not([disabled]):hover {
-				transform: translateY(-2px);
-			}
-		}
-
-		& .filter-btn {
-			color: hsl(var(--clr-primary-200));
-			background: hsl(var(--clr-accent-700));
-
-			&.active-filter {
-				color: hsl(var(--clr-primary-800));
-				background: hsl(var(--clr-accent-600));
-				border: 2px solid hsl(var(--clr-primary-800));
-			}
-		}
-
-		& .clear-btn {
-			background: transparent;
-			color: hsl(var(--clr-primary-800));
-			box-shadow: 0 0 0 3px hsl(var(--clr-primary-800)) inset;
-		}
 	}
 </style>
