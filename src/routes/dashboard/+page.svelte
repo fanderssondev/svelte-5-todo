@@ -2,10 +2,11 @@
 	import { enhance } from '$app/forms';
 	import FilterSection from '$lib/components/FilterSection.svelte';
 	import Todo from '$lib/components/Todo.svelte';
+	import type { TodoType } from '$lib/types';
 
 	interface Props {
 		data: {
-			todos: Todo[];
+			todos: TodoType[];
 			user: {
 				id: string;
 				name: string;
@@ -18,12 +19,12 @@
 	type Filter = 'all' | 'unfinished' | 'finished';
 	let filter: Filter = $state('all');
 
-	let filteredTodos = $derived<Todo[]>(filterTodos(data.todos, filter));
+	let filteredTodos = $derived<TodoType[]>(filterTodos(data.todos, filter));
 	let unfinished = $derived(data.todos.filter((todo) => !todo.completed).length);
 
 	let editing = $state<string | null>(null);
 
-	function filterTodos(todos: Todo[], newFilter: Filter): Todo[] {
+	function filterTodos(todos: TodoType[], newFilter: Filter): TodoType[] {
 		switch (newFilter) {
 			case 'all':
 				return [...todos];

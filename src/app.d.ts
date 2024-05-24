@@ -13,12 +13,6 @@ declare global {
       // interface PageState {}
       // interface Platform {}
    }
-   interface Todo {
-      id: string,
-      text: string,
-      completed: boolean;
-      userId: string,
-   }
 }
 
 export {};

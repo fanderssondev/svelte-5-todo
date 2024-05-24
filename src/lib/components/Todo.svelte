@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import type { TodoType } from '$lib/types';
 	import 'iconify-icon';
 
 	interface Props {
-		todo: Todo;
+		todo: TodoType;
 		editing: string | null;
 		toggleEditing: (id: string) => void;
 	}

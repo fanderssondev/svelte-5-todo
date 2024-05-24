@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import Button from './Button.svelte';
 
 	type Filter = 'all' | 'unfinished' | 'finished';
 
@@ -13,7 +12,7 @@
 	let { unfinished, filter, setFilter }: Props = $props();
 </script>
 
-<!-- <div class="filters">
+<div class="filters">
 	<p><span>{unfinished}</span> unfinishied {unfinished === 1 ? 'todo' : 'todos'}</p>
 	<button
 		class:active-filter={filter === 'all'}
@@ -34,32 +33,7 @@
 		onclick={() => setFilter('finished')}>Finished</button
 	>
 	<form action="?/clearFinished" method="post" use:enhance>
-		<button class="clear-btn">Clear Finished</button>
-	</form>
-</div> -->
-
-<div class="filters">
-	<p><span>{unfinished}</span> unfinishied {unfinished === 1 ? 'todo' : 'todos'}</p>
-	<Button filter val={'all'} active={filter === 'all'} disabled={filter === 'all'} {setFilter}
-		>All</Button
-	>
-	<Button
-		filter
-		val={'unfinished'}
-		active={filter === 'unfinished'}
-		disabled={filter === 'unfinished'}
-		{setFilter}>Unfinished</Button
-	>
-	<Button
-		filter
-		val={'finished'}
-		active={filter === 'finished'}
-		disabled={filter === 'finished'}
-		{setFilter}>Finished</Button
-	>
-
-	<form action="?/clearFinished" method="post" use:enhance>
-		<Button clear>Clear Finished</Button>
+		<button class="clear-btn" onclick={() => setFilter('all')}>Clear Finished</button>
 	</form>
 </div>
 
