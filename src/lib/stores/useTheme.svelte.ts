@@ -18,39 +18,29 @@ function getInitialTheme(): boolean {
    return false;
 }
 
-// 1. Check system preference
-// 2. Check local storage
-// 3. 
-
-
 export function useTheme() {
 
    let darkMode = $state<boolean>(getInitialTheme());
 
 
-   // Optional: Listen to system preference changes
+   // Check system preference changes
    if (browser) {
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
          darkMode = event.matches;
 
-         if (browser) {
-            if (darkMode) {
-               // document.body.dataset.theme = 'dark';
-               localStorage.setItem('darkMode', 'true');
-            } else {
-               // document.body.dataset.theme = '';
-               localStorage.setItem('darkMode', 'false');
-            }
+         if (darkMode) {
+            localStorage.setItem('darkMode', 'true');
+         } else {
+            localStorage.setItem('darkMode', 'false');
          }
       });
    }
 
+   // Check user preference changes
    if (browser) {
       if (darkMode) {
-         // document.body.dataset.theme = 'dark';
          localStorage.setItem('darkMode', 'true');
       } else {
-         // document.body.dataset.theme = '';
          localStorage.setItem('darkMode', 'false');
       }
    }
@@ -60,15 +50,11 @@ export function useTheme() {
 
       if (browser) {
          if (darkMode) {
-            // document.body.dataset.theme = 'dark';
             localStorage.setItem('darkMode', 'true');
          } else {
             // document.body.dataset.theme = '';
             localStorage.setItem('darkMode', 'false');
          }
-
-         // darkMode ? (document.body.dataset.theme = 'dark') : (document.body.dataset.theme = '');
-         // darkMode ? localStorage.setItem('darkMode', 'true') : localStorage.setItem('darkMode', 'false');
       }
    }
 

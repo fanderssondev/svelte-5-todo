@@ -8,9 +8,10 @@
 		editing: string | null;
 		toggleEditing: (id: string, event?: KeyboardEvent) => void;
 		handleBlur: (event: FocusEvent, id: string) => void;
+		toggleEscapeKey: (event: KeyboardEvent, id: string) => void;
 	}
 
-	let { todo, editing, toggleEditing, handleBlur }: Props = $props();
+	let { todo, editing, toggleEditing, handleBlur, toggleEscapeKey }: Props = $props();
 </script>
 
 <li class:completed={todo.completed}>
@@ -37,7 +38,7 @@
 				name="text"
 				autofocus
 				onblur={(e) => handleBlur(e, todo.id)}
-				onkeydown={(e) => toggleEditing(todo.id, e)}
+				onkeydown={(e) => toggleEscapeKey(e, todo.id)}
 				value={todo.text}
 			/>
 		{:else}

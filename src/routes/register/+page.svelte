@@ -20,11 +20,15 @@
 				<input id="password" name="password" type="password" placeholder="Password" required />
 			</div>
 
+			<button type="submit">Register</button>
+
+			{#if form?.invalid}
+				<p class="error">Something went wrong</p>
+			{/if}
+
 			{#if form?.user}
 				<p class="error">Username is taken</p>
 			{/if}
-
-			<button type="submit">Register</button>
 		</form>
 	</div>
 </section>
@@ -39,7 +43,7 @@
 	h1 {
 		text-align: center;
 		font-size: 5rem;
-		letter-spacing: 4px;
+		letter-spacing: 8px;
 		margin-block: 3rem;
 	}
 
@@ -53,6 +57,13 @@
 		background-color: hsl(var(--clr-primary-300));
 	}
 
+	.error {
+		color: hsl(var(--clr-accent-600));
+		letter-spacing: 3px;
+		margin-top: 2rem;
+		text-align: center;
+	}
+
 	button {
 		padding: 0.2em 0.7em;
 		border-radius: 5px;
@@ -60,6 +71,8 @@
 		color: hsl(var(--clr-primary-300));
 		font-size: 1.75rem;
 		letter-spacing: 3px;
+		margin-top: 1rem;
+		width: 100%;
 
 		&:hover {
 			cursor: pointer;

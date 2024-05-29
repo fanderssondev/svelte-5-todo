@@ -1,8 +1,8 @@
 import { redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { db } from '$lib/database';
-import { invalidateAll } from '$app/navigation';
 import type { TodoType } from '$lib/types';
+
+import { db } from '$lib/database';
 
 export const load: PageServerLoad = async ({ locals }) => {
    // redirect user if not logged in
@@ -66,7 +66,7 @@ export const actions: Actions = {
          where: { id, userId: locals.user.id }
       });
    },
-   clearFinished: async ({ request, locals }) => {
+   clearFinished: async ({ locals }) => {
       await db.todo.deleteMany({
          where: { completed: true, userId: locals.user.id }
       });

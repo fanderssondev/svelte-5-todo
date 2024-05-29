@@ -20,11 +20,11 @@
 				<input id="password" name="password" type="password" placeholder="Password" required />
 			</div>
 
-			{#if form?.invalid}
+			<button type="submit">Login</button>
+
+			{#if form?.credentials}
 				<p class="error">You have entered the wrong credentials</p>
 			{/if}
-
-			<button type="submit">Login</button>
 		</form>
 	</div>
 </section>
@@ -33,13 +33,12 @@
 	section {
 		display: grid;
 		place-items: center;
-		/* min-height: 100vh; */
 	}
 
 	h1 {
 		text-align: center;
 		font-size: 5rem;
-		letter-spacing: 4px;
+		letter-spacing: 8px;
 		margin-block: 3rem;
 	}
 
@@ -53,6 +52,13 @@
 		background-color: hsl(var(--clr-primary-300));
 	}
 
+	.error {
+		color: hsl(var(--clr-accent-600));
+		letter-spacing: 3px;
+		margin-top: 2rem;
+		text-align: center;
+	}
+
 	button {
 		padding: 0.2em 0.7em;
 		border-radius: 5px;
@@ -60,6 +66,8 @@
 		color: hsl(var(--clr-primary-300));
 		font-size: 1.75rem;
 		letter-spacing: 3px;
+		margin-top: 1rem;
+		width: 100%;
 
 		&:hover {
 			cursor: pointer;

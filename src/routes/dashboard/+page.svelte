@@ -19,10 +19,8 @@
 	let { data }: DataProps = $props();
 
 	let activeFilter: Filter = $state('all');
-
 	let filteredTodos = $derived<TodoType[]>(filterTodos(data.todos, activeFilter));
 	let unfinished = $derived(data.todos.filter((todo) => !todo.completed).length);
-
 	let editing = $state<string | null>(null);
 
 	function filterTodos(todos: TodoType[], newFilter: Filter): TodoType[] {
@@ -40,18 +38,17 @@
 		activeFilter = newFilter;
 	}
 
-	function toggleEditing(id: string, event?: KeyboardEvent): void {
-		if (event && event.key === 'Escape') {
+	function toggleEditing(id: string): void {
+		if (!editing) {
+			editing = id;
+		} else {
 			editing = null;
-			return;
 		}
+	}
 
-		if (!event) {
-			if (!editing) {
-				editing = id;
-			} else {
-				editing = null;
-			}
+	function toggleEscapeKey(event: KeyboardEvent, id: string): void {
+		if (event.key === 'Escape') {
+			toggleEditing(id);
 		}
 	}
 
@@ -74,7 +71,7 @@
 
 <ul>
 	{#each filteredTodos as todo (todo.id)}
-		<Todo {todo} {editing} {toggleEditing} {handleBlur} />
+		<Todo {todo} {editing} {toggleEditing} {handleBlur} {toggleEscapeKey} />
 	{/each}
 </ul>
 
