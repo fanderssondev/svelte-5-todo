@@ -24,7 +24,7 @@
 // [x] Database
 
 // SECTION Page todos
-// [ ] Logo
+// [x] Logo
 // [x] Login button
 // [x] Sign up button
 // [x] Toggle darkmode button

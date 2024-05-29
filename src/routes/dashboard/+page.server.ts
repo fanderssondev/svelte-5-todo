@@ -2,6 +2,7 @@ import { redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/database';
 import { invalidateAll } from '$app/navigation';
+import type { TodoType } from '$lib/types';
 
 export const load: PageServerLoad = async ({ locals }) => {
    // redirect user if not logged in
@@ -9,7 +10,7 @@ export const load: PageServerLoad = async ({ locals }) => {
       redirect(307, '/login');
    }
 
-   const todos: Todo[] = await db.todo.findMany({
+   const todos: TodoType[] = await db.todo.findMany({
       where: {
          userId: locals.user.id,
       }

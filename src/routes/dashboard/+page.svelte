@@ -4,7 +4,7 @@
 	import Todo from '$lib/components/Todo.svelte';
 	import type { TodoType } from '$lib/types';
 
-	interface Props {
+	interface DataProps {
 		data: {
 			todos: TodoType[];
 			user: {
@@ -14,7 +14,7 @@
 		};
 	}
 
-	let { data }: Props = $props();
+	let { data }: DataProps = $props();
 
 	type Filter = 'all' | 'unfinished' | 'finished';
 	let filter: Filter = $state('all');
@@ -39,7 +39,12 @@
 		filter = newFilter;
 	}
 
-	function toggleEditing(id: string) {
+	function toggleEditing(id: string, event?: KeyboardEvent): void {
+		if (event && event.key === 'Escape') {
+			editing = null;
+			return;
+		}
+
 		if (!editing) {
 			editing = id;
 		} else {
@@ -50,26 +55,12 @@
 	function handleBlur(event: FocusEvent, id: string): void {
 		const targetElement = event.target as HTMLInputElement;
 
-		console.log(targetElement.value);
+		editing = null;
 		targetElement.blur();
-	}
-
-	// BUG Doesn't change the state of editing
-	function handleKeyDown(event: KeyboardEvent & { currentTarget: EventTarget & Window }) {
-		if (event.key === 'Escape') {
-			console.log('KEY');
-			editing = null;
-		}
 	}
 </script>
 
-<svelte:window onkeydown={handleKeyDown} />
-
 <h1>Todos</h1>
-
-<pre>
-   {JSON.stringify(editing, null, 2)}
-</pre>
 
 <form action="?/create" method="post" use:enhance>
 	<!-- svelte-ignore a11y_autofocus -->
@@ -80,7 +71,7 @@
 
 <ul>
 	{#each filteredTodos as todo (todo.id)}
-		<Todo {todo} {editing} {toggleEditing} />
+		<Todo {todo} {editing} {toggleEditing} {handleBlur} />
 	{/each}
 </ul>
 

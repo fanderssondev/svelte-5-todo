@@ -6,10 +6,11 @@
 	interface Props {
 		todo: TodoType;
 		editing: string | null;
-		toggleEditing: (id: string) => void;
+		toggleEditing: (id: string, event?: KeyboardEvent) => void;
+		handleBlur: (event: FocusEvent, id: string) => void;
 	}
 
-	let { todo, editing, toggleEditing }: Props = $props();
+	let { todo, editing, toggleEditing, handleBlur }: Props = $props();
 </script>
 
 <li class:completed={todo.completed}>
@@ -27,22 +28,22 @@
 	</form>
 
 	<form action="?/update" method="post" use:enhance>
+		<!-- SECTION edit todo -->
 		{#if editing === todo.id}
-			<!-- SECTION edit todo -->
 			<input type="hidden" name="id" value={todo.id} />
 			<!-- svelte-ignore a11y_autofocus -->
 			<input
 				type="text"
 				name="text"
 				autofocus
-				onblur={() => toggleEditing(todo.id)}
+				onblur={(e) => handleBlur(e, todo.id)}
+				onkeydown={(e) => toggleEditing(todo.id, e)}
 				value={todo.text}
 			/>
 		{:else}
+			<!-- SECTION delete todo -->
 			<!-- svelte-ignore a11y_no_static_element_interactions -->
 			<span ondblclick={() => toggleEditing(todo.id)}>{todo.text}</span>
-			<!-- <form action="?/delete" method="post" use:enhance> -->
-			<!-- SECTION delete todo -->
 			<input type="hidden" name="id" value={todo.id} />
 			<button formaction="?/delete">
 				<iconify-icon class="delete-icon" icon="mdi:delete-forever-outline"></iconify-icon>
