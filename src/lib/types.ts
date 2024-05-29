@@ -4,3 +4,5 @@ export interface TodoType {
    completed: boolean;
    userId: string,
 }
+
+export type Filter = 'all' | 'unfinished' | 'finished';

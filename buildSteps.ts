@@ -1,6 +1,7 @@
 // SECTION Style
 // [x] CSS reset
 // [x] Darkmode
+// [ ] Responsive design
 // [ ] Icons for todos, possibly changeable
 
 // SECTION Structure

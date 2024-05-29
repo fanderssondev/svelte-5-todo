@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+
+	import type { TodoType, Filter } from '$lib/types';
+
 	import FilterSection from '$lib/components/FilterSection.svelte';
 	import Todo from '$lib/components/Todo.svelte';
-	import type { TodoType } from '$lib/types';
 
 	interface DataProps {
 		data: {
@@ -16,10 +18,9 @@
 
 	let { data }: DataProps = $props();
 
-	type Filter = 'all' | 'unfinished' | 'finished';
-	let filter: Filter = $state('all');
+	let activeFilter: Filter = $state('all');
 
-	let filteredTodos = $derived<TodoType[]>(filterTodos(data.todos, filter));
+	let filteredTodos = $derived<TodoType[]>(filterTodos(data.todos, activeFilter));
 	let unfinished = $derived(data.todos.filter((todo) => !todo.completed).length);
 
 	let editing = $state<string | null>(null);
@@ -36,7 +37,7 @@
 	}
 
 	function setFilter(newFilter: Filter) {
-		filter = newFilter;
+		activeFilter = newFilter;
 	}
 
 	function toggleEditing(id: string, event?: KeyboardEvent): void {
@@ -45,10 +46,12 @@
 			return;
 		}
 
-		if (!editing) {
-			editing = id;
-		} else {
-			editing = null;
+		if (!event) {
+			if (!editing) {
+				editing = id;
+			} else {
+				editing = null;
+			}
 		}
 	}
 
@@ -67,7 +70,7 @@
 	<input class="input-form" type="text" name="text" autofocus placeholder="Add todo" />
 </form>
 
-<FilterSection {unfinished} {filter} {setFilter} />
+<FilterSection {unfinished} {activeFilter} {setFilter} />
 
 <ul>
 	{#each filteredTodos as todo (todo.id)}

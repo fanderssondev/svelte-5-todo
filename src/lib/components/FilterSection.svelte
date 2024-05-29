@@ -1,44 +1,37 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 
-	type Filter = 'all' | 'unfinished' | 'finished';
+	import type { Filter } from '$lib/types';
 
 	interface Props {
 		unfinished: number;
-		filter: Filter;
+		activeFilter: Filter;
 		setFilter: (newFilter: Filter) => void;
 	}
 
-	let { unfinished, filter, setFilter }: Props = $props();
+	let { unfinished, activeFilter, setFilter }: Props = $props();
+
+	let btnArray: Filter[] = ['all', 'unfinished', 'finished'];
 </script>
 
 <div class="filters">
 	<p><span>{unfinished}</span> unfinishied {unfinished === 1 ? 'todo' : 'todos'}</p>
-	<button
-		class:active-filter={filter === 'all'}
-		class="filter-btn"
-		disabled={filter === 'all'}
-		onclick={() => setFilter('all')}>All</button
-	>
-	<button
-		class:active-filter={filter === 'unfinished'}
-		class="filter-btn"
-		disabled={filter === 'unfinished'}
-		onclick={() => setFilter('unfinished')}>Unfinishied</button
-	>
-	<button
-		class:active-filter={filter === 'finished'}
-		class="filter-btn"
-		disabled={filter === 'finished'}
-		onclick={() => setFilter('finished')}>Finished</button
-	>
+
+	{#each btnArray as btn}
+		<button
+			class:active-filter={activeFilter === btn}
+			class="filter-btn"
+			disabled={activeFilter === btn}
+			onclick={() => setFilter(btn)}>{btn}</button
+		>
+	{/each}
+
 	<form action="?/clearFinished" method="post" use:enhance>
 		<button class="clear-btn" onclick={() => setFilter('all')}>Clear Finished</button>
 	</form>
 </div>
 
 <style>
-	/* Filter buttons */
 	.filters {
 		margin-top: 4rem;
 		margin-bottom: 4rem;
