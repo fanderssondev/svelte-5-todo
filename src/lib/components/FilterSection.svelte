@@ -17,14 +17,16 @@
 <div class="filters">
 	<p><span>{unfinished}</span> unfinishied {unfinished === 1 ? 'todo' : 'todos'}</p>
 
-	{#each btnArray as btn}
-		<button
-			class:active-filter={activeFilter === btn}
-			class="filter-btn"
-			disabled={activeFilter === btn}
-			onclick={() => setFilter(btn)}>{btn}</button
-		>
-	{/each}
+	<div class="filter-btns">
+		{#each btnArray as btn}
+			<button
+				class:active-filter={activeFilter === btn}
+				class="filter-btn"
+				disabled={activeFilter === btn}
+				onclick={() => setFilter(btn)}>{btn}</button
+			>
+		{/each}
+	</div>
 
 	<form action="?/clearFinished" method="post" use:enhance>
 		<button class="clear-btn" onclick={() => setFilter('all')}>Clear Finished</button>
@@ -35,7 +37,8 @@
 	.filters {
 		margin-top: 4rem;
 		margin-bottom: 4rem;
-		display: flex;
+		display: grid;
+		grid-template-areas: 'stats btns btns clear';
 		align-items: center;
 		gap: 1.25rem;
 		padding: 1rem 1rem;
@@ -44,11 +47,11 @@
 		font-size: 1.25rem;
 
 		p {
-			flex: 1;
 			font-family: 'Roboto';
 			font-size: 1.25rem;
 			letter-spacing: 2px;
 			color: hsl(var(--clr-primary-700));
+			grid-area: stats;
 
 			& span {
 				padding: 0;
@@ -78,6 +81,13 @@
 			}
 		}
 
+		.filter-btns {
+			display: flex;
+			justify-content: space-between;
+			gap: 1rem;
+			grid-area: btns;
+		}
+
 		& .filter-btn {
 			color: hsl(var(--clr-primary-200));
 			background: hsl(var(--clr-accent-700));
@@ -93,6 +103,33 @@
 			background: transparent;
 			color: hsl(var(--clr-primary-800));
 			box-shadow: 0 0 0 3px hsl(var(--clr-primary-800)) inset;
+		}
+	}
+
+	form {
+		margin-left: auto;
+		grid-area: clear;
+	}
+
+	@media (width < 768px) {
+		.filters {
+			grid-template-areas:
+				'stats stats'
+				'btns clear';
+
+			justify-content: space-around;
+		}
+
+		.filter-btns {
+			gap: 5rem;
+		}
+	}
+
+	@media (width < 520px) {
+		.filters {
+			grid-template-areas:
+				'stats clear'
+				'btns btns';
 		}
 	}
 </style>

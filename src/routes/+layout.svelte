@@ -101,6 +101,6 @@
 	.container {
 		max-width: 1000px;
 		margin: 0 auto;
-		padding-inline: 2rem;
+		padding-inline: 1rem;
 	}
 </style>

@@ -150,3 +150,15 @@ iconify-icon {
    width: 1em;
    height: 1em;
 }
+
+@media (width < 900px) {
+   :root {
+      font-size: 0.75rem;
+   }
+}
+
+@media (width < 768px) {
+   :root {
+      font-size: 0.6rem;
+   }
+}
