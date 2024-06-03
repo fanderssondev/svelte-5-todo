@@ -10,23 +10,16 @@
 	}
 
 	let { unfinished, activeFilter, setFilter }: Props = $props();
-
-	let btnArray: Filter[] = ['all', 'unfinished', 'finished'];
 </script>
 
 <div class="filters">
 	<p><span>{unfinished}</span> unfinishied {unfinished === 1 ? 'todo' : 'todos'}</p>
 
-	<div class="filter-btns">
-		{#each btnArray as btn}
-			<button
-				class:active-filter={activeFilter === btn}
-				class="filter-btn"
-				disabled={activeFilter === btn}
-				onclick={() => setFilter(btn)}>{btn}</button
-			>
-		{/each}
-	</div>
+	<select bind:value={activeFilter} onchange={() => setFilter(activeFilter)}>
+		<option value="all">All</option>
+		<option value="unfinished">Unfinished</option>
+		<option value="finished">Finished</option>
+	</select>
 
 	<form action="?/clearFinished" method="post" use:enhance>
 		<button class="clear-btn" onclick={() => setFilter('all')}>Clear Finished</button>
@@ -37,8 +30,7 @@
 	.filters {
 		margin-top: 4rem;
 		margin-bottom: 4rem;
-		display: grid;
-		grid-template-areas: 'stats btns btns clear';
+		display: flex;
 		align-items: center;
 		gap: 1.25rem;
 		padding: 1rem 1rem;
@@ -60,7 +52,6 @@
 		}
 
 		& button {
-			background-color: red;
 			border-radius: 5px;
 			font-size: inherit;
 			padding: 14px 24px 16px;
@@ -81,55 +72,27 @@
 			}
 		}
 
-		.filter-btns {
-			display: flex;
-			justify-content: space-between;
-			gap: 1rem;
-			grid-area: btns;
+		select {
+			background-color: hsl(var(--clr-primary-400));
+			border: none;
+			padding: 0.5em 0.7em;
+			border-radius: 2px;
+			font-size: 1.25rem;
+			font-family: Roboto slab;
+			font-weight: 400;
+			letter-spacing: 3px;
+			color: hsl(var(--clr-primary-800));
+			margin-left: auto;
 		}
 
-		& .filter-btn {
-			color: hsl(var(--clr-primary-200));
-			background: hsl(var(--clr-accent-700));
-
-			&.active-filter {
-				color: hsl(var(--clr-primary-800));
-				background: hsl(var(--clr-accent-600));
-				border: 2px solid hsl(var(--clr-primary-800));
-			}
+		option {
+			border-radius: 2px;
 		}
 
 		& .clear-btn {
 			background: transparent;
 			color: hsl(var(--clr-primary-800));
-			box-shadow: 0 0 0 3px hsl(var(--clr-primary-800)) inset;
-		}
-	}
-
-	form {
-		margin-left: auto;
-		grid-area: clear;
-	}
-
-	@media (width < 768px) {
-		.filters {
-			grid-template-areas:
-				'stats stats'
-				'btns clear';
-
-			justify-content: space-around;
-		}
-
-		.filter-btns {
-			gap: 5rem;
-		}
-	}
-
-	@media (width < 520px) {
-		.filters {
-			grid-template-areas:
-				'stats clear'
-				'btns btns';
+			box-shadow: 0 0 0 3px hsl(var(--clr-primary-800));
 		}
 	}
 </style>
