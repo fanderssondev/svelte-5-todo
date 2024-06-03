@@ -43,7 +43,6 @@
 			font-size: 1.25rem;
 			letter-spacing: 2px;
 			color: hsl(var(--clr-primary-700));
-			grid-area: stats;
 
 			& span {
 				padding: 0;

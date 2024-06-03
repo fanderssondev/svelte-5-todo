@@ -74,6 +74,9 @@
 				font-size: 1.5rem;
 				letter-spacing: 3px;
 				text-decoration: none;
+				transition:
+					transform 200ms,
+					background 200ms;
 
 				&.register {
 					background-color: hsl(var(--clr-accent-600));
@@ -81,8 +84,9 @@
 
 				&:hover {
 					cursor: pointer;
-					background-color: hsl(var(--clr-action-500));
-					color: hsl(var(--clr-primary-700));
+					/* background-color: hsl(var(--clr-action-500));
+					color: hsl(var(--clr-primary-700)); */
+					transform: translateY(-2px);
 				}
 			}
 		}
