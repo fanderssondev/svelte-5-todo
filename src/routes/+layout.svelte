@@ -14,7 +14,7 @@
 	<div>
 		<a href="/"><iconify-icon icon="mdi:checkbox-multiple-marked-circle-outline"></iconify-icon></a>
 		{#if $page.data.user}
-			<h3>Welcome {$page.data.user.name}</h3>
+			<h3>Welcome <span class="name">{$page.data.user.name}</span></h3>
 		{/if}
 		<nav class="links">
 			{#if !$page.data.user}
@@ -86,6 +86,15 @@
 				}
 			}
 		}
+	}
+
+	h3 {
+		letter-spacing: 3px;
+		font-size: 1rem;
+	}
+
+	.name {
+		text-transform: capitalize;
 	}
 
 	iconify-icon {
